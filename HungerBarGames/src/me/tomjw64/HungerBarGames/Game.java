@@ -106,6 +106,7 @@ public class Game extends ChatVariableHolder{
 		removeTribute(p);
 		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Player "+BLUE+p.getName()+YELLOW+" has won the game in arena "+BLUE+arena.getName()+"!");
 		Players.heal(p);
+		Players.clearInv(p);
 		for(String cmd:ConfigManager.getWinCommands())
 		{
 			cmd=cmd.replace("<player>", p.getName());
