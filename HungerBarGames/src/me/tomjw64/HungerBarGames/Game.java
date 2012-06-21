@@ -81,11 +81,13 @@ public class Game extends ChatVariableHolder{
 	{
 		status=null;
 		unregisterListeners();
-		for(Player p:spectators)
+		final Set<Player> specs=spectators;
+		for(Player p:specs)
 		{
 			setSpec(p,false);
 		}
-		for(Player p:tributes)
+		final Set<Player> tribs=tributes;
+		for(Player p:tribs)
 		{
 			removeTribute(p);
 		}
