@@ -19,8 +19,8 @@ public class GameCommandListener extends GameListener{
 	{
 		if(getGame().isTribute(command.getPlayer()))
 		{
-			String[] cmd=command.getMessage().split(" ");
-			if(!cmd[0].equalsIgnoreCase("hbg")&&!ConfigManager.getAllowedCommands().contains(cmd[0]))
+			String[] cmd=command.getMessage().replace("/", "").split(" ");
+			if(!ConfigManager.getAllowedCommands().contains(cmd[0]))
 			{
 				command.setCancelled(true);
 			}
