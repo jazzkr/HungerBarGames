@@ -65,7 +65,7 @@ public class GamesManager {
 		else
 		{
 			Location l=inGame.get(p);
-			if(p.isDead())
+			if(p.getHealth()<=0)
 			{
 				respawns.put(p,l);
 			}
@@ -86,7 +86,7 @@ public class GamesManager {
 		else
 		{
 			Location l=specing.get(p);
-			if(p.isDead())
+			if(p.getHealth()<=0)
 			{
 				respawns.put(p,l);
 			}
