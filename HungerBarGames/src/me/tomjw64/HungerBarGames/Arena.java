@@ -14,7 +14,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.entity.Entity;
 
 public class Arena {
 	//Name of arena
@@ -255,11 +254,6 @@ public class Arena {
 				&&(x<=cuboid1.getX()||x<=cuboid2.getX())
 				&&(z>=cuboid1.getZ()||z>=cuboid2.getZ())
 				&&(z<=cuboid1.getZ()||z<=cuboid2.getZ());
-	}
-	
-	public boolean isInArena(Entity e)
-	{
-		return isInArena(e.getWorld().getBlockAt(e.getLocation()));
 	}
 	
 	public boolean isInArena(Location l)

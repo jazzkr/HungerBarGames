@@ -20,7 +20,7 @@ public class SetSpawn extends HBGCommand{
 			{
 				if(a.isCuboidSet())
 				{
-					if(a.isInArena(p))
+					if(a.isInArena(p.getLocation()))
 					{
 						int pos;
 						try
