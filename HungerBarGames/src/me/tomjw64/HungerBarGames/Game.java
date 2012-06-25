@@ -218,6 +218,7 @@ public class Game extends ChatVariableHolder{
 			new CountdownRemovalListener(this);
 			new CountdownDamageListener(this);
 			new CountdownArenaProtect(this);
+			new CountdownCommandListener(this);
 			break;
 		case IN_GAME:
 			new EliminationListener(this);
