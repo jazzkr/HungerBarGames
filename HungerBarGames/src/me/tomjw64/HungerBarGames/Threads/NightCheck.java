@@ -4,8 +4,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import me.tomjw64.HungerBarGames.Game;
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
-import me.tomjw64.HungerBarGames.General.Status;
+import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
+import me.tomjw64.HungerBarGames.Util.Status;
 
 public class NightCheck extends ChatVariableHolder implements Runnable{
 	private Game game;

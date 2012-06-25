@@ -1,6 +1,6 @@
 package me.tomjw64.HungerBarGames.Commands;
 
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
+import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
 
 import org.bukkit.command.CommandSender;
 

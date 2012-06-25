@@ -3,8 +3,8 @@ package me.tomjw64.HungerBarGames.Commands.ModCommands;
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.CommandHandler;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChestClass;
 import me.tomjw64.HungerBarGames.Managers.ChestClassManager;
+import me.tomjw64.HungerBarGames.Util.ChestClass;
 
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;

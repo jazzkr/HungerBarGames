@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import me.tomjw64.HungerBarGames.HungerBarGames;
-import me.tomjw64.HungerBarGames.General.ChestClass;
-import me.tomjw64.HungerBarGames.General.ChestItem;
+import me.tomjw64.HungerBarGames.Util.ChestClass;
+import me.tomjw64.HungerBarGames.Util.ChestItem;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

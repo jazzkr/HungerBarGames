@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import me.tomjw64.HungerBarGames.General.ChestClass;
-import me.tomjw64.HungerBarGames.General.CuboidPoint;
-import me.tomjw64.HungerBarGames.General.RollbackInfo;
 import me.tomjw64.HungerBarGames.Managers.ConfigManager;
+import me.tomjw64.HungerBarGames.Util.ChestClass;
+import me.tomjw64.HungerBarGames.Util.CuboidPoint;
+import me.tomjw64.HungerBarGames.Util.RollbackInfo;
 
 import org.bukkit.Location;
 import org.bukkit.World;

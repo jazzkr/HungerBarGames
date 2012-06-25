@@ -8,8 +8,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 import me.tomjw64.HungerBarGames.Game;
-import me.tomjw64.HungerBarGames.General.RollbackInfo;
 import me.tomjw64.HungerBarGames.Listeners.GameListener;
+import me.tomjw64.HungerBarGames.Util.RollbackInfo;
 
 public class BlockLogger extends GameListener{
 

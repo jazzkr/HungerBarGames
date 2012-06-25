@@ -2,8 +2,8 @@ package me.tomjw64.HungerBarGames.Commands.GenCommands;
 
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.Status;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
+import me.tomjw64.HungerBarGames.Util.Status;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import me.tomjw64.HungerBarGames.General.ChatVariableHolder;
-import me.tomjw64.HungerBarGames.General.Players;
-import me.tomjw64.HungerBarGames.General.Status;
 import me.tomjw64.HungerBarGames.Listeners.GameListener;
 import me.tomjw64.HungerBarGames.Listeners.Lobby.*;
 import me.tomjw64.HungerBarGames.Listeners.Countdown.*;
@@ -15,6 +12,9 @@ import me.tomjw64.HungerBarGames.Listeners.Game.*;
 import me.tomjw64.HungerBarGames.Managers.ConfigManager;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
 import me.tomjw64.HungerBarGames.Threads.*;
+import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
+import me.tomjw64.HungerBarGames.Util.Players;
+import me.tomjw64.HungerBarGames.Util.Status;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

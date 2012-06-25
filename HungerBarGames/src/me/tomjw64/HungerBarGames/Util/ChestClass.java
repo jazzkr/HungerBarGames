@@ -1,4 +1,4 @@
-package me.tomjw64.HungerBarGames.General;
+package me.tomjw64.HungerBarGames.Util;
 
 import java.util.ArrayList;
 import java.util.List;

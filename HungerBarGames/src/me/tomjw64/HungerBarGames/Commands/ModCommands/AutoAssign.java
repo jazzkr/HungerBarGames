@@ -5,8 +5,8 @@ import org.bukkit.command.CommandSender;
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.CommandHandler;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
-import me.tomjw64.HungerBarGames.General.ChestClass;
 import me.tomjw64.HungerBarGames.Managers.ChestClassManager;
+import me.tomjw64.HungerBarGames.Util.ChestClass;
 
 public class AutoAssign extends HBGCommand{
 

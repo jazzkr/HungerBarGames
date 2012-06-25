@@ -1,4 +1,4 @@
-package me.tomjw64.HungerBarGames.General;
+package me.tomjw64.HungerBarGames.Util;
 
 public enum Status {
 	LOBBY(0),
