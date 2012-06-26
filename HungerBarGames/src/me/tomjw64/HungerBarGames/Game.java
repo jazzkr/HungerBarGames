@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.bukkit.entity.Player;
 
+import me.tomjw64.HungerBarGames.Threads.Countdown;
 import me.tomjw64.HungerBarGames.Threads.Lobby;
 import me.tomjw64.HungerBarGames.Threads.NightCheck;
 import me.tomjw64.HungerBarGames.Util.Status;
@@ -11,6 +12,7 @@ import me.tomjw64.HungerBarGames.Util.Status;
 public class Game {
 	private Arena arena;
 	private Lobby lobby;
+	private Countdown countdown;
 	private NightCheck nightCheck;
 	private Status status=Status.IDLE;
 	
@@ -22,10 +24,28 @@ public class Game {
 	public void startLobby()
 	{
 		lobby=new Lobby(this);
-		nightCheck=new NightCheck(this);
 	}
 	
-	public void endGame()
+	public void startCountdown()
+	{
+		if(status!=Status.IDLE)
+		{
+			countdown=new Countdown(this);
+		}
+	}
+	
+	public void startGame()
+	{
+		if(status!=Status.IDLE)
+		{
+			setStatus(Status.IN_GAME);
+			arena.getWorld().setTime(0);
+			arena.fillChests();
+			nightCheck=new NightCheck(this);
+		}
+	}
+	
+	public void stopGame()
 	{
 		setStatus(Status.IDLE);
 		//TODO: End game
