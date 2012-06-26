@@ -10,11 +10,22 @@ import org.bukkit.entity.Player;
 
 public class PlayerManager {
 	private static Map<Player,PlayerStorage> inGame=new HashMap<Player,PlayerStorage>();
-	private static Map<Player,PlayerStorage> specing=new HashMap<Player,PlayerStorage>();
+	private static Map<Player,PlayerStorage> spectating=new HashMap<Player,PlayerStorage>();
 	private static Map<Player,PlayerStorage> respawns=new HashMap<Player,PlayerStorage>();
 	
 	public static boolean isInGame(Player p)
 	{
 		return inGame.containsKey(p);
 	}
+	
+	public static boolean isSpectating(Player p)
+	{
+		
+	}
+	
+	public static boolean isRespawnMarked()
+	{
+		
+	}
+	
 }

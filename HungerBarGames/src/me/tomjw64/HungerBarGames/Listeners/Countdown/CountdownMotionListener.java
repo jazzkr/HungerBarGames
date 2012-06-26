@@ -30,7 +30,7 @@ public class CountdownMotionListener extends GameListener{
 				if(ConfigManager.getExplode())
 				{
 					move.getFrom().getWorld().createExplosion(to,0,false);
-					move.getPlayer().setHealth(0);
+					move.getPlayer().damage(20);
 				}
 				else
 				{

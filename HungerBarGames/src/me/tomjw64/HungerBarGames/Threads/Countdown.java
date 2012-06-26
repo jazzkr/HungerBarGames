@@ -19,9 +19,9 @@ public class Countdown extends ChatVariableHolder implements Runnable{
 	private Game game;
 	private int time=ConfigManager.getCountdown();
 	
-	public Countdown(Game gm)
+	public Countdown(Game game)
 	{
-		game=gm;
+		this.game=game;
 		game.setStatus(Status.COUNTDOWN);
 		prepareTributes();
 		new Thread(this).start();
