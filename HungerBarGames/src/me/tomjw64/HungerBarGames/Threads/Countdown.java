@@ -1,13 +1,20 @@
 package me.tomjw64.HungerBarGames.Threads;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Slime;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Managers.ConfigManager;
@@ -23,6 +30,7 @@ public class Countdown extends ChatVariableHolder implements Runnable{
 	{
 		game=gm;
 		game.setStatus(Status.COUNTDOWN);
+		prepareWorld();
 		prepareTributes();
 		new Thread(this).start();
 	}
@@ -52,8 +60,7 @@ public class Countdown extends ChatVariableHolder implements Runnable{
 		{
 			p.sendMessage(prefix+GREEN+"May the odds be ever in your favor!");
 		}
-		game.setStatus(Status.IN_GAME);
-		game.getArena().getWorld().setTime(0);
+		game.startGame();
 	}
 	
 	public void prepareTributes()
@@ -76,7 +83,19 @@ public class Countdown extends ChatVariableHolder implements Runnable{
 			p.sendMessage(prefix+GREEN+"The countdown has begun!");
 			p.sendMessage(list);
 		}
-		game.getArena().fillChests();
+	}
+	
+	public void prepareWorld()
+	{
+		game.getArena().getWorld().setTime(0);
+		for(Entity e:game.getArena().getWorld().getEntities())
+		{
+			if(e instanceof Monster||e instanceof Slime)
+			{
+				Bukkit.getPluginManager().callEvent(new EntityDeathEvent((LivingEntity)e,Collections.<ItemStack> emptyList()));
+				e.remove();
+			}
+		}
 	}
 	
 }
