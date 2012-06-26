@@ -1,5 +1,8 @@
 package me.tomjw64.HungerBarGames.Threads;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -9,19 +12,19 @@ import me.tomjw64.HungerBarGames.Util.Status;
 
 public class NightCheck extends ChatVariableHolder implements Runnable{
 	private Game game;
-	private World world;
+	private Set<String> deaths=new HashSet<String>();
 	private long lastDisplay;
 	
 	public NightCheck(Game gm)
 	{
 		game=gm;
-		world=game.getArena().getWorld();
 		new Thread(this).start();
 	}
 	
 	@Override
 	public void run()
 	{
+		final World world=game.getArena().getWorld();
 		while(game.getStatus()==Status.IN_GAME)
 		{
 			if(world.getTime()>13000&&System.currentTimeMillis()>lastDisplay+600000)
@@ -29,9 +32,9 @@ public class NightCheck extends ChatVariableHolder implements Runnable{
 				for(Player p:game.getTributes())
 				{
 					p.sendMessage(prefix+YELLOW+"Tributes killed today:");
-					if(game.getDeaths().size()>0)
+					if(deaths.size()>0)
 					{
-						for(String x:game.getDeaths())
+						for(String x:deaths)
 						{
 							p.sendMessage(GREEN+x);
 						}
@@ -42,7 +45,7 @@ public class NightCheck extends ChatVariableHolder implements Runnable{
 					}
 				}
 				lastDisplay=System.currentTimeMillis();
-				game.clearDeaths();
+				deaths.clear();
 			}
 			try {
 				Thread.sleep(120000);
@@ -50,6 +53,11 @@ public class NightCheck extends ChatVariableHolder implements Runnable{
 				wtf.printStackTrace();
 			}
 		}
+	}
+	
+	public void addDeath(Player p)
+	{
+		deaths.add(p.getName());
 	}
 
 }

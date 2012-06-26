@@ -1,195 +1,45 @@
 package me.tomjw64.HungerBarGames;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
-import me.tomjw64.HungerBarGames.Listeners.GameListener;
-import me.tomjw64.HungerBarGames.Listeners.Lobby.*;
-import me.tomjw64.HungerBarGames.Listeners.Countdown.*;
-import me.tomjw64.HungerBarGames.Listeners.Game.*;
-import me.tomjw64.HungerBarGames.Managers.ConfigManager;
-import me.tomjw64.HungerBarGames.Managers.GamesManager;
-import me.tomjw64.HungerBarGames.Threads.*;
-import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
-import me.tomjw64.HungerBarGames.Util.Players;
-import me.tomjw64.HungerBarGames.Util.Status;
-
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 
-public class Game extends ChatVariableHolder{
+import me.tomjw64.HungerBarGames.Threads.Lobby;
+import me.tomjw64.HungerBarGames.Threads.NightCheck;
+import me.tomjw64.HungerBarGames.Util.Status;
+
+public class Game {
 	private Arena arena;
-	private Set<Player> tributes=new HashSet<Player>();
-	private Set<Player> spectators=new HashSet<Player>();
-	private Set<String> deaths=new HashSet<String>();
-	private Set<Chest> filledChests=new HashSet<Chest>();
-	private Set<GameListener> listeners=new HashSet<GameListener>();
-	private boolean repeat;
-	private Status status;
-	private boolean notEnoughPlayers=false;
-		
-	public Game(Arena ar, boolean rpt)
+	private Lobby lobby;
+	private NightCheck nightCheck;
+	private Status status=Status.IDLE;
+	
+	public Game(Arena arena)
 	{
-		arena=ar;
-		repeat=rpt;
-		
-		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"A lobby has been started for arena "+BLUE+arena.getName()+"!");
-		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Type "+BLUE+"/hbg join "+arena.getName()+YELLOW+" to join the game");
-		
-		new Lobby(this);
+		this.arena=arena;
 	}
 	
-	public void startGame()
+	public void startLobby()
 	{
-		status=Status.IN_GAME;
+		lobby=new Lobby(this);
+		nightCheck=new NightCheck(this);
+	}
+	
+	public void endGame()
+	{
+		setStatus(Status.IDLE);
+		//TODO: End game
+	}
+	
+	public void setStatus(Status status)
+	{
+		this.status=status;
 		updateListeners();
-		
-		new NightCheck(this);
 	}
 	
-	public void startCountdown()
+	public void updateListeners()
 	{
-		Collection<Location> spawns=arena.getSpawns().values();
-		Iterator<Location> i=spawns.iterator();
-		String list=prefix+GREEN+"Tributes: ";
-		for(Player p:tributes)
-		{
-			list+=RED+p.getName()+WHITE+", ";
-			p.teleport(i.next());
-			p.setGameMode(GameMode.SURVIVAL);
-			Players.clearInv(p);
-			Players.heal(p);
-		}
-		list=list.substring(0,list.length()-2);
-		for(Player p:tributes)
-		{
-			p.sendMessage(prefix+GREEN+"The countdown has begun!");
-			p.sendMessage(list);
-		}
-		
-		arena.fillChests();
-		new Countdown(this);
-		
-	}
-	
-	public void endGame(boolean forced)
-	{
-		status=null;
-		unregisterListeners();
-		final Set<Player> specs=spectators;
-		for(Player p:specs)
-		{
-			setSpec(p,false);
-		}
-		final Set<Player> tribs=tributes;
-		for(Player p:tribs)
-		{
-			removeTribute(p);
-		}
-		if(!forced)
-		{
-			arena.endGame(repeat);
-		}
-		else
-		{
-			arena.endGame(false);
-			Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+YELLOW+" has been cancelled!");
-		}
-	}
-	
-	public void declareWinner()
-	{
-		Player p=(Player)tributes.toArray()[0];
-		removeTribute(p);
-		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Player "+BLUE+p.getName()+YELLOW+" has won the game in arena "+BLUE+arena.getName()+"!");
-		Players.heal(p);
-		Players.clearInv(p);
-		for(String cmd:ConfigManager.getWinCommands())
-		{
-			cmd=cmd.replace("<player>", p.getName());
-			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),cmd);
-		}
-		endGame(false);
-	}
-	
-	public void addTribute(Player p)
-	{
-		if(getNumTributes()<arena.getMaxPlayers()&&status==Status.LOBBY&&getNumTributes()<arena.getNumSpawns())
-		{
-			tributes.add(p);
-			GamesManager.setInGame(p,true);
-			p.setGameMode(GameMode.SURVIVAL);
-			Players.clearInv(p);
-			Players.heal(p);
-			p.teleport(arena.getLobby());
-			p.sendMessage(prefix+YELLOW+"You have joined the game in arena "+BLUE+arena.getName()+"!");
-			p.sendMessage(prefix+YELLOW+"This game has "+BLUE+getNumTributes()+"/"+arena.getMaxPlayers()+YELLOW+" players!");
-			if(notEnoughPlayers&&getNumTributes()>=arena.getMinPlayers())
-			{
-				notEnoughPlayers=false;
-				startCountdown();
-			}
-		}
-		else if(getNumTributes()>=arena.getMaxPlayers()||getNumTributes()>=arena.getNumSpawns())
-		{
-			p.sendMessage(prefix+RED+"There is not enough room in the game!");
-		}
-		else
-		{
-			p.sendMessage(prefix+RED+"The game has already been started!");
-		}
-	}
-	
-	public void eliminateTribute(Player p)
-	{
-		p.getWorld().strikeLightning(p.getLocation().add(0, 100, 0));
-		deaths.add(p.getName());
-		removeTribute(p);
-		if(getNumTributes()==1)
-		{
-			declareWinner();
-		}
-	}
-	
-	public void removeTribute(Player p)
-	{
-		tributes.remove(p);
-		GamesManager.setInGame(p,false);
-	}
-	
-	public Set<Player> getTributes()
-	{
-		return tributes;
-	}
-	
-	public boolean isTribute(Player p)
-	{
-		return tributes.contains(p);
-	}
-	
-	public int getNumTributes()
-	{
-		return tributes.size();
-	}
-	
-	public Set<String> getDeaths()
-	{
-		return deaths;
-	}
-	
-	public void clearDeaths()
-	{
-		deaths.clear();
-	}
-	
-	public void setStatus(Status stat)
-	{
-		status=stat;
+		//TODO: Update listeners
 	}
 	
 	public Status getStatus()
@@ -197,107 +47,21 @@ public class Game extends ChatVariableHolder{
 		return status;
 	}
 	
-	public void setNotEnoughPlayers()
+	public Set<Player> getTributes()
 	{
-		notEnoughPlayers=true;
+		//TODO: Return tributes
+		return null;
 	}
 	
-	public void updateListeners()
+	public int getPop()
 	{
-		unregisterListeners();
-		switch(status)
-		{
-		case LOBBY:
-			new LobbyLevelListener(this);
-			new LobbyBlockListener(this);
-			new LobbyRemovalListener(this);
-			break;
-		case COUNTDOWN:
-			new CountdownMotionListener(this);
-			new CountdownInteractListener(this);
-			new CountdownRemovalListener(this);
-			new CountdownDamageListener(this);
-			new CountdownArenaProtect(this);
-			new CountdownCommandListener(this);
-			break;
-		case IN_GAME:
-			new EliminationListener(this);
-			new GameDamageListener(this);
-			new GameBlockListener(this);
-			new BlockLogger(this);
-			new GameChestListener(this);
-			new GameCommandListener(this);
-			new GameChatListener(this);
-			new GameTeleportListner(this);
-			new GameMotionListener(this);
-			new SpectatorRestrictionListener(this);
-			break;
-		}
-	}
-	
-	public void unregisterListeners()
-	{
-		Object[] gls=listeners.toArray();
-		for(int x=0;x<gls.length;x++)
-		{
-			GameListener gl=(GameListener)gls[x];
-			listeners.remove(gl);
-			gl.unregister();
-			gl=null;
-		}
+		//TODO: Return tributes.size
+		return 0;
 	}
 	
 	public Arena getArena()
 	{
 		return arena;
-	}
-	
-	public void setFilled(Chest c)
-	{
-		filledChests.add(c);
-	}
-	
-	public boolean beenFilled(Chest c)
-	{
-		return filledChests.contains(c);
-	}
-	
-	public void addListener(GameListener gl)
-	{
-		listeners.add(gl);
-	}
-	
-	public boolean isSpec(Player p)
-	{
-		return spectators.contains(p);
-	}
-	
-	public void setSpec(Player p,boolean set)
-	{
-		if(set)
-		{
-			spectators.add(p);
-			GamesManager.setSpec(p,true);
-			p.setGameMode(GameMode.SURVIVAL);
-			p.setAllowFlight(true);
-			for(Player other:Bukkit.getServer().getOnlinePlayers())
-			{
-				other.hidePlayer(p);
-			}
-			p.teleport(arena.getSpec());
-			p.sendMessage(prefix+YELLOW+"You are now spectating arena "+BLUE+arena.getName()+"!");
-		}
-		else
-		{
-			spectators.remove(p);
-			GamesManager.setSpec(p,false);
-			p.setAllowFlight(false);
-			for(Player other:Bukkit.getServer().getOnlinePlayers())
-			{
-				other.showPlayer(p);
-			}
-			p.sendMessage(prefix+YELLOW+"You have stopped spectating arena "+BLUE+arena.getName()+"!");
-		}
 	}
 	
 }

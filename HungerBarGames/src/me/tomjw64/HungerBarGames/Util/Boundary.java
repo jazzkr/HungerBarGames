@@ -1,5 +1,6 @@
 package me.tomjw64.HungerBarGames.Util;
 
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -10,12 +11,17 @@ public class Boundary {
 	private BoundaryType type;
 	private int radius;
 	
-	public Boundary(World w,BoundaryType bt,Block c,int r)
+	public Boundary(World world,BoundaryType type,Block center,int radius)
 	{
-		world=w;
-		type=bt;
-		center=c;
-		radius=r;
+		this.world=world;
+		this.type=type;
+		this.center=center;
+		this.radius=radius;
+	}
+	
+	public World getWorld()
+	{
+		return world;
 	}
 	
 	public boolean isIn(Block b)

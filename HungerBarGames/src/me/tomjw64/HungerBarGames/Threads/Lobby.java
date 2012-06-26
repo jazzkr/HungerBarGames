@@ -1,5 +1,6 @@
 package me.tomjw64.HungerBarGames.Threads;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import me.tomjw64.HungerBarGames.Game;
@@ -10,12 +11,14 @@ import me.tomjw64.HungerBarGames.Util.Status;
 public class Lobby extends ChatVariableHolder implements Runnable{
 	private Game game;
 	private int time=ConfigManager.getDelay();
+	private boolean waiting=false;
 	
-	public Lobby(Game gm)
+	public Lobby(Game game)
 	{
-		game=gm;
+		this.game=game;
 		game.setStatus(Status.LOBBY);
-		game.updateListeners();
+		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"A lobby has been started for arena "+BLUE+game.getArena().getName()+"!");
+		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Type "+BLUE+"/hbg join "+game.getArena().getName()+YELLOW+" to join the game");
 		new Thread(this).start();
 	}
 	
@@ -38,20 +41,30 @@ public class Lobby extends ChatVariableHolder implements Runnable{
 			}
 			time--;
 		}
-		if(game.getNumTributes()>=game.getArena().getMinPlayers())
+		if(game.getPop()>=game.getArena().getMin())
 		{
-			game.startCountdown();
+			startCountdown();
 		}
 		else
 		{
 			for(Player p:game.getTributes())
 			{
 				p.sendMessage(prefix+RED+"There are not enough players in the game!");
-				p.sendMessage(prefix+RED+"Have "+game.getNumTributes()+"/"+game.getArena().getMinPlayers()+" players needed to start!");
+				p.sendMessage(prefix+RED+"Have "+game.getPop()+"/"+game.getArena().getMin()+" players needed to start!");
 				p.sendMessage(prefix+RED+"The game will start when enough players have joined!");
-				game.setNotEnoughPlayers();
 			}
+			waiting=true;
 		}
+	}
+	
+	public boolean isWaiting()
+	{
+		return waiting;
+	}
+	
+	public void startCountdown()
+	{
+		new Countdown(game);
 	}
 	
 }

@@ -1,97 +1,59 @@
 package me.tomjw64.HungerBarGames;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-
-import me.tomjw64.HungerBarGames.Managers.ConfigManager;
-import me.tomjw64.HungerBarGames.Util.ChestClass;
-import me.tomjw64.HungerBarGames.Util.CuboidPoint;
-import me.tomjw64.HungerBarGames.Util.RollbackInfo;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
+
+import me.tomjw64.HungerBarGames.Util.ArenaInfo;
+import me.tomjw64.HungerBarGames.Util.ArenaLocations;
+import me.tomjw64.HungerBarGames.Util.Boundary;
+import me.tomjw64.HungerBarGames.Util.ChestFiller;
 
 public class Arena {
-	//Name of arena
-	private String name;
-	//Whether or not to load the arena to database
-	private boolean changes;
-	//Arena Cuboid
-	private CuboidPoint cuboid1;
-	private CuboidPoint cuboid2;
-	//Holds player spawn points
-	private Map<Integer,Location> spawns=new HashMap<Integer,Location>();
-	//Holds chests associated with the arena
-	private Map<ChestClass,Set<Chest>> chests=new HashMap<ChestClass,Set<Chest>>();
-	private ChestClass autofill;
-	//Holds blocks to be rolled back
-	private Map<Block,RollbackInfo> rollbacks=new HashMap<Block,RollbackInfo>();
-	//The spectator spawn
-	private Location specPoint;
-	//The lobby spawn
-	private Location lobbyPoint;
-	//The maximum players set for this arena
-	private int maxPlayers;
-	//The minimum players set for this arena
-	private int minPlayers;
-	//Game being played in this arena
+	private ArenaInfo info;
+	private Boundary boundary;
+	private ArenaLocations warps;
+	private ChestFiller filler;
 	private Game game;
 	
-	public Arena(String arenaName)
+	public Arena(ArenaInfo info,Boundary boundary,ArenaLocations warps,ChestFiller filler)
 	{
-		this(arenaName,null,null,ConfigManager.getMaxPlayers(),ConfigManager.getMinPlayers(),null,null,new HashMap<Integer,Location>(),new HashMap<ChestClass,Set<Chest>>(),null);
+		this.info=info;
+		this.boundary=boundary;
+		this.warps=warps;
+		this.filler=filler;
 	}
 	
-	public Arena(String arenaName,CuboidPoint cp1,CuboidPoint cp2,int maxP,int minP,Location lobby,Location spec,Map<Integer,Location> spwns,Map<ChestClass,Set<Chest>> chsts,ChestClass filler)
+	public void fillChests()
 	{
-		name=arenaName;
-		changes=false;
-		cuboid1=cp1;
-		cuboid2=cp2;
-		if(maxP<2)
-		{
-			maxP=2;
-			changes=true;
-		}
-		maxPlayers=maxP;
-		if(minP<2||minP>maxP)
-		{
-			minP=2;
-			changes=true;
-		}
-		minPlayers=minP;
-		lobbyPoint=lobby;
-		specPoint=spec;
-		spawns=spwns;
-		chests=chsts;
-		autofill=filler;
+		//TODO: Fill assigned chests
 	}
 	
-	public void startGame(boolean repeat)
+	public Map<Integer,Location> getSpawns()
 	{
-		game=new Game(this,repeat);
-	}
-	
-	public void endGame(boolean repeat)
-	{
-		rollback();
-		if(repeat)
-		{
-			game=new Game(this,repeat);
-		}
-		else
-		{
-			game=null;
-		}
+		//TODO: Return tributes spawn points
+		return null;
 	}
 	
 	public String getName()
 	{
-		return name;
+		return info.getName();
+	}
+	
+	public int getMin()
+	{
+		return 0;
+	}
+	
+	public int getMax()
+	{
+		return 0;
+	}
+	
+	public World getWorld()
+	{
+		return boundary.getWorld();
 	}
 	
 	public Game getGame()
@@ -99,208 +61,4 @@ public class Arena {
 		return game;
 	}
 	
-	public int getMaxPlayers()
-	{
-		return maxPlayers;
-	}
-	
-	public void setMaxPlayers(int max)
-	{
-		maxPlayers=max;
-		changes=true;
-	}
-	
-	public int getMinPlayers()
-	{
-		return minPlayers;
-	}
-	
-	public void setMinPlayers(int min)
-	{
-		if(min>=2)
-		{
-			minPlayers=min;
-		}
-		changes=true;
-	}
-	
-	public Location getLobby()
-	{
-		return lobbyPoint;
-	}
-	
-	public void setLobby(Location lobby)
-	{
-		lobbyPoint=lobby;
-		changes=true;
-	}
-	
-	public int getNumSpawns()
-	{
-		return spawns.size();
-	}
-	
-	public void addSpawn(Integer pos,Location spawn)
-	{
-		spawns.put(pos,spawn);
-		changes=true;
-	}
-	
-	public Map<Integer,Location> getSpawns()
-	{
-		return spawns;
-	}
-	
-	public Location getSpec()
-	{
-		return specPoint;
-	}
-	
-	public void setSpec(Location spec)
-	{
-		specPoint=spec;
-		changes=true;
-	}
-	
-	public boolean getChanged()
-	{
-		return changes;
-	}
-	
-	public World getWorld()
-	{
-		if(cuboid1!=null)
-		{
-			return cuboid1.getWorld();
-		}
-		else if(cuboid2!=null)
-		{
-			return cuboid2.getWorld();
-		}
-		else
-		{
-			return null;
-		}
-	}
-	
-	public void fillChests()
-	{
-		for(Map.Entry<ChestClass,Set<Chest>> entry:chests.entrySet())
-		{
-			ChestClass cc=entry.getKey();
-			for(Chest c:entry.getValue())
-			{
-				cc.fillChest(c);
-				game.setFilled(c);
-			}
-		}
-	}
-	
-	public Map<ChestClass,Set<Chest>> getChests()
-	{
-		return chests;
-	}
-	
-	public void addChest(ChestClass cc, Chest c)
-	{
-		if(chests.keySet().contains(cc))
-		{
-			chests.get(cc).add(c);
-		}
-		else
-		{
-			Set<Chest> newChestSet=new HashSet<Chest>();
-			newChestSet.add(c);
-			chests.put(cc,newChestSet);
-		}
-		changes=true;
-	}
-	
-	public boolean isAssigned(ChestClass cc, Chest c)
-	{
-		if(chests.keySet().contains(cc))
-		{
-			return chests.get(cc).contains(c);
-		}
-		return false;
-	}
-	
-	public void setCuboid1(World w,int x, int z)
-	{
-		cuboid1=new CuboidPoint(w,x,z);
-		changes=true;
-	}
-	
-	public CuboidPoint getCuboid1()
-	{
-		return cuboid1;
-	}
-	
-	public void setCuboid2(World w,int x, int z)
-	{
-		cuboid2=new CuboidPoint(w,x,z);
-		changes=true;
-	}
-	public CuboidPoint getCuboid2()
-	{
-		return cuboid2;
-	}
-	
-	public boolean isInArena(Block b)
-	{
-		int x=b.getX();
-		int z=b.getZ();
-		return (x>=cuboid1.getX()||x>=cuboid2.getX())
-				&&(x<=cuboid1.getX()||x<=cuboid2.getX())
-				&&(z>=cuboid1.getZ()||z>=cuboid2.getZ())
-				&&(z<=cuboid1.getZ()||z<=cuboid2.getZ());
-	}
-	
-	public boolean isInArena(Location l)
-	{
-		return isInArena(l.getWorld().getBlockAt(l));
-	}
-	
-	public boolean isCuboidSet()
-	{
-		return (cuboid1!=null&&cuboid2!=null);
-	}
-	
-	public void addRollback(Block b,RollbackInfo ri)
-	{
-		if(!rollbacks.containsKey(b))
-		{
-			rollbacks.put(b,ri);
-		}
-	}
-	
-	public void rollback()
-	{
-		for(Map.Entry<Block,RollbackInfo> entry:rollbacks.entrySet())
-		{
-			Block b=entry.getKey();
-			b.setTypeId(entry.getValue().getID());
-			b.setData(entry.getValue().getData());
-		}
-		HungerBarGames.logger.info("Arena "+name+" rolled back!");
-	}
-	
-	public void setFiller(ChestClass cc)
-	{
-		autofill=cc;
-		changes=true;
-	}
-	
-	public ChestClass getFiller()
-	{
-		return autofill;
-	}
-	
-	public void unassign(Chest c)
-	{
-		for(Set<Chest> cts:chests.values())
-		{
-			cts.remove(c);
-		}
-	}
 }
