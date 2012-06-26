@@ -43,7 +43,7 @@ public class Lobby extends ChatVariableHolder implements Runnable{
 		}
 		if(game.getPop()>=game.getArena().getMin())
 		{
-			startCountdown();
+			game.startCountdown();
 		}
 		else
 		{
@@ -60,11 +60,6 @@ public class Lobby extends ChatVariableHolder implements Runnable{
 	public boolean isWaiting()
 	{
 		return waiting;
-	}
-	
-	public void startCountdown()
-	{
-		new Countdown(game);
 	}
 	
 }

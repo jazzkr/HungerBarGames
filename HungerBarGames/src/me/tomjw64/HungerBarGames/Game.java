@@ -5,6 +5,7 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import me.tomjw64.HungerBarGames.Threads.Countdown;
 import me.tomjw64.HungerBarGames.Threads.Lobby;
 import me.tomjw64.HungerBarGames.Threads.NightCheck;
 import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
@@ -14,6 +15,7 @@ import me.tomjw64.HungerBarGames.Util.Status;
 public class Game extends ChatVariableHolder{
 	private Arena arena;
 	private Lobby lobby;
+	private Countdown countdown;
 	private NightCheck nightCheck;
 	private PlayerHandler players=new PlayerHandler(this);
 	private Status status=Status.IDLE;
@@ -26,15 +28,41 @@ public class Game extends ChatVariableHolder{
 	public void startLobby()
 	{
 		lobby=new Lobby(this);
-		nightCheck=new NightCheck(this);
 	}
 	
-	public void endGame(boolean forced)
+	public void startCountdown()
+	{
+		if(status!=Status.IDLE)
+		{
+			countdown=new Countdown(this);
+		}
+	}
+	
+	public void startGame()
+	{
+		if(status!=Status.IDLE)
+		{
+			setStatus(Status.IN_GAME);
+			arena.getWorld().setTime(0);
+			arena.fillChests();
+			nightCheck=new NightCheck(this);
+		}
+	}
+	
+	public void stopGame(boolean forced)
 	{
 		setStatus(Status.IDLE);
 		players.removeAll();
-		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+YELLOW+" has been cancelled!");
-		//TODO: End game
+		if(forced)
+		{
+			Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+YELLOW+" has been cancelled!");
+			//TODO: Stop playlist
+		}
+		else
+		{
+			Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+YELLOW+" has ended!");
+			//TODO: Continue playlist
+		}
 	}
 	
 	public void setStatus(Status status)
