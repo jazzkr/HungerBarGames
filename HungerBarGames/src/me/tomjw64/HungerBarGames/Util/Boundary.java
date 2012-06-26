@@ -4,6 +4,7 @@ package me.tomjw64.HungerBarGames.Util;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 
 public class Boundary {
 	private World world;
@@ -17,11 +18,6 @@ public class Boundary {
 		this.type=type;
 		this.center=center;
 		this.radius=radius;
-	}
-	
-	public World getWorld()
-	{
-		return world;
 	}
 	
 	public boolean isIn(Block b)
@@ -45,6 +41,16 @@ public class Boundary {
 	public boolean isIn(Location l)
 	{
 		return isIn(world.getBlockAt(l));
+	}
+	
+	public boolean isIn(Entity e)
+	{
+		return isIn(e.getLocation());
+	}
+	
+	public World getWorld()
+	{
+		return world;
 	}
 	
 }

@@ -20,7 +20,7 @@ public class SetSpec extends HBGCommand{
 			{
 				if(a.isCuboidSet())
 				{
-					if(a.isInArena(p.getLocation()))
+					if(a.isInArena(p))
 					{
 						a.setSpec(p.getLocation());
 						p.sendMessage(prefix+YELLOW+"Spectator spawn set for arena "+BLUE+a.getName()+YELLOW+"!");
