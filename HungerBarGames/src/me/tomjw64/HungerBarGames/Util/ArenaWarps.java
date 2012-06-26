@@ -14,4 +14,19 @@ public class ArenaWarps {
 		return spawns;
 	}
 	
+	public int getNumSpawns()
+	{
+		return spawns.size();
+	}
+	
+	public Location getLobby()
+	{
+		return lobby;
+	}
+	
+	public Location getSpec()
+	{
+		return spec;
+	}
+	
 }

@@ -8,21 +8,21 @@ import org.bukkit.World;
 import me.tomjw64.HungerBarGames.Util.ArenaInfo;
 import me.tomjw64.HungerBarGames.Util.ArenaWarps;
 import me.tomjw64.HungerBarGames.Util.Boundary;
-import me.tomjw64.HungerBarGames.Util.ChestFiller;
+import me.tomjw64.HungerBarGames.Util.ChestInfo;
 
 public class Arena {
 	private ArenaInfo info;
 	private Boundary boundary;
 	private ArenaWarps warps;
-	private ChestFiller filler;
+	private ChestInfo chests;
 	private Game game;
 	
-	public Arena(ArenaInfo info,Boundary boundary,ArenaWarps warps,ChestFiller filler)
+	public Arena(ArenaInfo info,Boundary boundary,ArenaWarps warps,ChestInfo chests)
 	{
 		this.info=info;
 		this.boundary=boundary;
 		this.warps=warps;
-		this.filler=filler;
+		this.chests=chests;
 	}
 	
 	public void fillChests()
@@ -30,9 +30,9 @@ public class Arena {
 		//TODO: Fill assigned chests
 	}
 	
-	public Map<Integer,Location> getSpawns()
+	public ArenaWarps getWarps()
 	{
-		return warps.getSpawns();
+		return warps;
 	}
 	
 	public String getName()
@@ -48,6 +48,11 @@ public class Arena {
 	public int getMax()
 	{
 		return 0;
+	}
+	
+	public Boundary getBoundary()
+	{
+		return boundary;
 	}
 	
 	public World getWorld()

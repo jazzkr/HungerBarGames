@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -73,7 +72,6 @@ public class Countdown extends ChatVariableHolder implements Runnable{
 		{
 			list+=RED+p.getName()+WHITE+", ";
 			p.teleport(i.next());
-			p.setGameMode(GameMode.SURVIVAL);
 			Players.clearInv(p);
 			Players.heal(p);
 		}

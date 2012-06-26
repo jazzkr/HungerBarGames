@@ -60,9 +60,19 @@ public class Game extends ChatVariableHolder{
 		}
 		else
 		{
-			Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+YELLOW+" has ended!");
+			players.declareWinner();
 			//TODO: Continue playlist
 		}
+	}
+	
+	public void addTibute(Player p)
+	{
+		players.addTribute(p);
+	}
+	
+	public void updateListeners()
+	{
+		//TODO: Update listeners
 	}
 	
 	public void setStatus(Status status)
@@ -71,9 +81,14 @@ public class Game extends ChatVariableHolder{
 		updateListeners();
 	}
 	
-	public void updateListeners()
+	public boolean isTribute(Player p)
 	{
-		//TODO: Update listeners
+		return players.isTribute(p);
+	}
+	
+	public boolean isWaiting()
+	{
+		return lobby.isWaiting();
 	}
 	
 	public Status getStatus()

@@ -1,5 +1,6 @@
 package me.tomjw64.HungerBarGames.Util;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -8,6 +9,7 @@ public class Players {
 	
 	public static void heal(Player p)
 	{
+		p.setGameMode(GameMode.SURVIVAL);
 		p.setHealth(20);
 		p.setFoodLevel(20);
 		p.setFireTicks(0);

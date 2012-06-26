@@ -8,9 +8,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Listeners.GameListener;
 
-public class GameDamageListener extends GameListener{
+public class GamePvPListener extends GameListener{
 
-	public GameDamageListener(Game gm) {
+	public GamePvPListener(Game gm) {
 		super(gm);
 	}
 	
