@@ -1,21 +1,28 @@
 package me.tomjw64.HungerBarGames;
 
 import java.util.Map;
+import java.util.Set;
 
-import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Chest;
 
-import me.tomjw64.HungerBarGames.Util.ArenaInfo;
-import me.tomjw64.HungerBarGames.Util.ArenaWarps;
-import me.tomjw64.HungerBarGames.Util.Boundary;
-import me.tomjw64.HungerBarGames.Util.ChestInfo;
+import me.tomjw64.HungerBarGames.Util.Arenas.ArenaInfo;
+import me.tomjw64.HungerBarGames.Util.Arenas.ArenaWarps;
+import me.tomjw64.HungerBarGames.Util.Arenas.Boundary;
+import me.tomjw64.HungerBarGames.Util.Arenas.ChestInfo;
+import me.tomjw64.HungerBarGames.Util.Chests.ChestClass;
 
 public class Arena {
 	private ArenaInfo info;
 	private Boundary boundary;
 	private ArenaWarps warps;
 	private ChestInfo chests;
-	private Game game;
+	private Game game=new Game(this);
+	
+	public Arena(String name)
+	{
+		this(new ArenaInfo(name),null,new ArenaWarps(),new ChestInfo());
+	}
 	
 	public Arena(ArenaInfo info,Boundary boundary,ArenaWarps warps,ChestInfo chests)
 	{
@@ -27,7 +34,25 @@ public class Arena {
 	
 	public void fillChests()
 	{
-		//TODO: Fill assigned chests
+		for(Map.Entry<ChestClass,Set<Chest>> entry:chests.getChests().entrySet())
+		{
+			ChestClass cc=entry.getKey();
+			for(Chest c:entry.getValue())
+			{
+				cc.fillChest(c);
+				game.setFilled(c);
+			}
+		}
+	}
+	
+	public boolean isBounded()
+	{
+		return boundary!=null;
+	}
+	
+	public boolean isSetup()
+	{
+		return warps.getLobby()!=null&&warps.getSpec()!=null;
 	}
 	
 	public ArenaWarps getWarps()
@@ -40,14 +65,14 @@ public class Arena {
 		return info.getName();
 	}
 	
-	public int getMin()
+	public ArenaInfo getInfo()
 	{
-		return 0;
+		return info;
 	}
 	
-	public int getMax()
+	public ChestInfo getChestInfo()
 	{
-		return 0;
+		return chests;
 	}
 	
 	public Boundary getBoundary()

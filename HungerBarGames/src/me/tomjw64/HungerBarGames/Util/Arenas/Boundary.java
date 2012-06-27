@@ -1,5 +1,7 @@
-package me.tomjw64.HungerBarGames.Util;
+package me.tomjw64.HungerBarGames.Util.Arenas;
 
+
+import me.tomjw64.HungerBarGames.Util.Enums.BoundaryType;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -46,6 +48,21 @@ public class Boundary {
 	public boolean isIn(Entity e)
 	{
 		return isIn(e.getLocation());
+	}
+	
+	public int getRadius()
+	{
+		return radius;
+	}
+	
+	public Block getCenter()
+	{
+		return center;
+	}
+	
+	public BoundaryType getType()
+	{
+		return type;
 	}
 	
 	public World getWorld()

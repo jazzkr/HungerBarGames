@@ -23,7 +23,7 @@ public class BlockLogger extends GameListener{
 		if(getGame().isTribute(broken.getPlayer()))
 		{
 			Block b=broken.getBlock();
-			getGame().getArena().addRollback(b,new RollbackInfo(b.getTypeId(),b.getData()));
+			getGame().addRollback(b,new RollbackInfo(b.getTypeId(),b.getData()));
 		}
 	}
 
@@ -33,18 +33,18 @@ public class BlockLogger extends GameListener{
 		if(getGame().isTribute(placed.getPlayer()))
 		{
 			Block b=placed.getBlock();
-			getGame().getArena().addRollback(b,new RollbackInfo(0,(byte)0));
+			getGame().addRollback(b,new RollbackInfo(0,(byte)0));
 		}
 	}
 	
 	@EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
 	public void explode(EntityExplodeEvent explode)
 	{
-		if(getGame().getArena().isInArena(explode.getLocation()))
+		if(getGame().getArena().getBoundary().isIn(explode.getLocation()))
 		{
 			for(Block b:explode.blockList())
 			{
-				getGame().getArena().addRollback(b,new RollbackInfo(b.getTypeId(),b.getData()));
+				getGame().addRollback(b,new RollbackInfo(b.getTypeId(),b.getData()));
 			}
 		}
 	}

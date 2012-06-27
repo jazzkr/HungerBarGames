@@ -15,11 +15,11 @@ public class SetLobby extends HBGCommand{
 		if(sender instanceof Player)
 		{
 			Player p=(Player)sender;
-			Arena a1=CommandHandler.getSelections().get(p);
-			if(a1!=null)
+			Arena a=CommandHandler.getSelections().get(p);
+			if(a!=null)
 			{
-				a1.setLobby(p.getLocation());
-				p.sendMessage(prefix+YELLOW+"Lobby spawn set for arena "+BLUE+a1.getName()+YELLOW+"!");
+				a.getWarps().setLobby(p.getLocation());
+				p.sendMessage(prefix+YELLOW+"Lobby spawn set for arena "+BLUE+a.getName()+YELLOW+"!");
 			}
 			else
 			{

@@ -18,15 +18,15 @@ public class SetSpawn extends HBGCommand{
 			Arena a=CommandHandler.getSelections().get(p);
 			if(a!=null)
 			{
-				if(a.isCuboidSet())
+				if(a.isBounded())
 				{
-					if(a.isInArena(p))
+					if(a.getBoundary().isIn(p))
 					{
 						int pos;
 						try
 						{
 							pos=Integer.parseInt(args[0]);
-							a.addSpawn(new Integer(pos),p.getLocation());
+							a.getWarps().addSpawn(new Integer(pos),p.getLocation());
 							p.sendMessage(prefix+YELLOW+"Spawn point "+BLUE+pos+YELLOW+" set for arena "+BLUE+a.getName()+YELLOW+"!");
 						}
 						catch(Exception wtf)

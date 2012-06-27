@@ -18,9 +18,9 @@ public class SetMin extends HBGCommand {
 			try
 			{
 				min=Integer.parseInt(args[0]);
-				if(min>=2&&min<=a.getMaxPlayers())
+				if(min>=2&&min<=a.getInfo().getMax())
 				{
-					a.setMinPlayers(min);
+					a.getInfo().setMin(min);
 					sender.sendMessage(prefix+YELLOW+"Minimum number of players set to "+BLUE+min+YELLOW+" for arena "+BLUE+a.getName()+YELLOW+"!");
 				}
 				else

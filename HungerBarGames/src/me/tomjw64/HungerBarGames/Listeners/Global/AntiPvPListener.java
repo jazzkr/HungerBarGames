@@ -24,7 +24,7 @@ public class AntiPvPListener implements Listener{
 		{
 			Player dmgd=(Player)dmg.getEntity();
 			Player dmgr=(Player)dmg.getDamager();
-			if(!GamesManager.isInGame(dmgd)||!GamesManager.isInGame(dmgr))
+			if(GamesManager.getGame(dmgd,true)==null||GamesManager.getGame(dmgr,true)==null)
 			{
 				dmg.setCancelled(true);
 			}

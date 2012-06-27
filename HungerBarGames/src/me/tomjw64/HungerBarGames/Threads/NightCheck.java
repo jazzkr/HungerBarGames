@@ -1,6 +1,5 @@
 package me.tomjw64.HungerBarGames.Threads;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.World;
@@ -8,11 +7,10 @@ import org.bukkit.entity.Player;
 
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
-import me.tomjw64.HungerBarGames.Util.Status;
+import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 public class NightCheck extends ChatVariableHolder implements Runnable{
 	private Game game;
-	private Set<String> deaths=new HashSet<String>();
 	private long lastDisplay;
 	
 	public NightCheck(Game gm)
@@ -29,6 +27,7 @@ public class NightCheck extends ChatVariableHolder implements Runnable{
 		{
 			if(world.getTime()>13000&&System.currentTimeMillis()>lastDisplay+600000)
 			{
+				Set<String> deaths=game.getPlayerHandler().getDeaths();
 				for(Player p:game.getTributes())
 				{
 					p.sendMessage(prefix+YELLOW+"Tributes killed today:");
@@ -53,11 +52,6 @@ public class NightCheck extends ChatVariableHolder implements Runnable{
 				wtf.printStackTrace();
 			}
 		}
-	}
-	
-	public void addDeath(Player p)
-	{
-		deaths.add(p.getName());
 	}
 
 }

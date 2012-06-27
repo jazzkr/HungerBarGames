@@ -18,11 +18,11 @@ public class SetSpec extends HBGCommand{
 			Arena a=CommandHandler.getSelections().get(p);
 			if(a!=null)
 			{
-				if(a.isCuboidSet())
+				if(a.isBounded())
 				{
-					if(a.isInArena(p))
+					if(a.getBoundary().isIn(p))
 					{
-						a.setSpec(p.getLocation());
+						a.getWarps().setSpec(p.getLocation());
 						p.sendMessage(prefix+YELLOW+"Spectator spawn set for arena "+BLUE+a.getName()+YELLOW+"!");
 					}
 					else
@@ -32,7 +32,7 @@ public class SetSpec extends HBGCommand{
 				}
 				else
 				{
-					p.sendMessage(prefix+RED+"You need to set up your arena cuboid first!");
+					p.sendMessage(prefix+RED+"You need to set up your arena boundary first!");
 				}
 			}
 			else

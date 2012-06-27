@@ -3,7 +3,7 @@ package me.tomjw64.HungerBarGames.Commands.GenCommands;
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
-import me.tomjw64.HungerBarGames.Util.Status;
+import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,16 +16,16 @@ public class Spec extends HBGCommand{
 		if(sender instanceof Player)
 		{
 			Player p=(Player)sender;
-			if(!GamesManager.isInGame(p))
+			if(GamesManager.getGame(p,true)!=null)
 			{
-				if(!GamesManager.isSpecing(p))
+				if(GamesManager.getGame(p,false)!=null)
 				{
 					Arena a=GamesManager.getArena(args[0]);
 					if(a!=null)
 					{
 						if(a.getGame()!=null&&a.getGame().getStatus()==Status.IN_GAME)
 						{
-							a.getGame().setSpec(p,true);
+							a.getGame().getPlayerHandler().addSpectator(p);
 						}
 						else
 						{

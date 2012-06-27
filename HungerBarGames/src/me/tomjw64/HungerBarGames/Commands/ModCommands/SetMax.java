@@ -18,14 +18,14 @@ public class SetMax extends HBGCommand {
 			try
 			{
 				max=Integer.parseInt(args[0]);
-				if(max>=2&&max>=a.getMinPlayers())
+				if(max>=2&&max>=a.getInfo().getMin())
 				{
-					a.setMaxPlayers(max);
+					a.getInfo().setMax(max);
 					sender.sendMessage(prefix+YELLOW+"Maximum number of players set to "+BLUE+max+YELLOW+" for arena "+BLUE+a.getName()+YELLOW+"!");
 				}
 				else
 				{
-					sender.sendMessage(prefix+RED+"Max must be greater than or equal to 2 and Min!");
+					sender.sendMessage(prefix+RED+"Max must be greater than or equal to 2 as well as Min!");
 				}
 			}
 			catch(Exception wtf)

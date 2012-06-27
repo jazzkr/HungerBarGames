@@ -6,7 +6,7 @@ import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.CommandHandler;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.ChestClassManager;
-import me.tomjw64.HungerBarGames.Util.ChestClass;
+import me.tomjw64.HungerBarGames.Util.Chests.ChestClass;
 
 public class AutoAssign extends HBGCommand{
 
@@ -18,7 +18,7 @@ public class AutoAssign extends HBGCommand{
 			ChestClass cc=ChestClassManager.getChestClass(args[0]);
 			if(cc!=null)
 			{
-				a.setFiller(cc);
+				a.getChestInfo().setAutoFiller(cc);
 				sender.sendMessage(prefix+YELLOW+"Auto-filler set to class "+BLUE+args[0]+YELLOW+" for arena "+a.getName()+"!");
 			}
 			else

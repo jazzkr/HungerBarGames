@@ -1,4 +1,4 @@
-package me.tomjw64.HungerBarGames.Util;
+package me.tomjw64.HungerBarGames.Util.Chests;
 
 public class ChestItem {
 	private int item;

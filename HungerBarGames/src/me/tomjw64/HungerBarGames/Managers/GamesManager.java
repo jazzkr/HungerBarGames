@@ -1,26 +1,17 @@
 package me.tomjw64.HungerBarGames.Managers;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.HungerBarGames;
+import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 public class GamesManager {
-	//All arenas
 	private static Set<Arena> arenas=new HashSet<Arena>();
-	//Players in a game
-	private static Map<Player,Location> inGame=new HashMap<Player,Location>();
-	//Players spectating
-	private static Map<Player,Location> specing=new HashMap<Player,Location>();
-	//Respawn logging
-	private static Map<Player,Location> respawns=new HashMap<Player,Location>();
 	
 	public static void addArena(Arena ar)
 	{
@@ -51,58 +42,6 @@ public class GamesManager {
 		return null;
 	}
 	
-	public static boolean isInGame(Player p)
-	{
-		return inGame.containsKey(p);
-	}
-	
-	public static void setInGame(Player p,boolean isPlaying)
-	{
-		if(isPlaying)
-		{
-			inGame.put(p,p.getLocation());
-		}
-		else
-		{
-			Location l=inGame.get(p);
-			if(p.getHealth()<=0)
-			{
-				respawns.put(p,l);
-			}
-			else
-			{
-				p.teleport(l);
-			}
-			inGame.remove(p);
-		}
-	}
-	
-	public static void setSpec(Player p,boolean isSpecing)
-	{
-		if(isSpecing)
-		{
-			specing.put(p,p.getLocation());
-		}
-		else
-		{
-			Location l=specing.get(p);
-			if(p.getHealth()<=0)
-			{
-				respawns.put(p,l);
-			}
-			else
-			{
-				p.teleport(l);
-			}
-			specing.remove(p);
-		}
-	}
-	
-	public static boolean isSpecing(Player p)
-	{
-		return specing.containsKey(p);
-	}
-	
 	public static void delArena(Arena a)
 	{
 		DataManager.removeArena(a.getName());
@@ -115,7 +54,7 @@ public class GamesManager {
 		{
 			for(Arena a:arenas)
 			{
-				if(a.getGame()!=null)
+				if(a.getGame().getStatus()!=Status.IDLE)
 				{
 					if(a.getGame().isTribute(p))
 					{
@@ -128,9 +67,9 @@ public class GamesManager {
 		{
 			for(Arena a: arenas)
 			{
-				if(a.getGame()!=null)
+				if(a.getGame().getStatus()!=Status.IDLE)
 				{
-					if(a.getGame().isSpec(p))
+					if(a.getGame().isSpectator(p))
 					{
 						return a.getGame();
 					}
@@ -146,23 +85,9 @@ public class GamesManager {
 		{
 			if(a.getGame()!=null)
 			{
-				a.getGame().endGame(true);
+				a.getGame().stopGame(true);
 			}
 		}
-	}
-	public static boolean respawnMarked(Player p)
-	{
-		return respawns.containsKey(p);
-	}
-	
-	public static void respawnUnmark(Player p)
-	{
-		respawns.remove(p);
-	}
-	
-	public static Location getRespawn(Player p)
-	{
-		return respawns.get(p);
 	}
 	
 }

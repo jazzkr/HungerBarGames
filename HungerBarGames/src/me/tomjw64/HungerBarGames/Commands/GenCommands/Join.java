@@ -15,16 +15,16 @@ public class Join extends HBGCommand{
 		if(sender instanceof Player)
 		{
 			Player p=(Player)sender;
-			if(!GamesManager.isInGame(p))
+			if(GamesManager.getGame(p,true)==null)
 			{
-				if(!GamesManager.isSpecing(p))
+				if(GamesManager.getGame(p,false)==null)
 				{
 					Arena a=GamesManager.getArena(args[0]);
 					if(a!=null)
 					{
 						if(a.getGame()!=null)
 						{
-							a.getGame().addTribute(p);
+							a.getGame().getPlayerHandler().addTribute(p);
 						}
 						else
 						{

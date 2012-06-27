@@ -16,7 +16,7 @@ public class GameTeleportListner extends GameListener {
 	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
 	public void teleport(PlayerTeleportEvent tele)
 	{
-		if(getGame().isTribute(tele.getPlayer())&&!getGame().getArena().isInArena(tele.getTo()))
+		if(getGame().isTribute(tele.getPlayer())&&!getGame().getArena().getBoundary().isIn(tele.getTo()))
 		{
 			tele.setCancelled(true);
 		}

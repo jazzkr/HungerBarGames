@@ -1,4 +1,4 @@
-package me.tomjw64.HungerBarGames.Util;
+package me.tomjw64.HungerBarGames.Util.Games;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

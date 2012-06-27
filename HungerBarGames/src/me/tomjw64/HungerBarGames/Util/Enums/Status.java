@@ -1,4 +1,4 @@
-package me.tomjw64.HungerBarGames.Util;
+package me.tomjw64.HungerBarGames.Util.Enums;
 
 public enum Status {
 	IDLE(),

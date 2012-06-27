@@ -17,7 +17,7 @@ public class Stop extends HBGCommand{
 			if(a.getGame()!=null)
 			{
 				sender.sendMessage(prefix+GREEN+"Game Cancelled!");
-				a.getGame().endGame(true);
+				a.getGame().stopGame(true);
 			}
 			else
 			{
@@ -37,7 +37,7 @@ public class Stop extends HBGCommand{
 
 	@Override
 	public String usage() {
-		return cmd()+ "[arena]";
+		return cmd()+ " [arena]";
 	}
 
 	@Override

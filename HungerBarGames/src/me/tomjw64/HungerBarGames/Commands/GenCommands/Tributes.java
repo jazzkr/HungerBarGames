@@ -17,9 +17,9 @@ public class Tributes extends HBGCommand{
 		{
 			if(a.getGame()!=null)
 			{
-				if(sender instanceof Player&&GamesManager.isInGame((Player)sender))
+				if(sender instanceof Player&&GamesManager.getGame((Player)sender,true)!=null)
 				{
-					sender.sendMessage(prefix+YELLOW+"There are "+a.getGame().getNumTributes()+" tributes still alive!");
+					sender.sendMessage(prefix+YELLOW+"There are "+a.getGame().getPop()+" tributes still alive!");
 				}
 				else
 				{

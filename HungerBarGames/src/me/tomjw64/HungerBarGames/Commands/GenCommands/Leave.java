@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
-import me.tomjw64.HungerBarGames.Util.Status;
+import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 public class Leave extends HBGCommand{
 
@@ -15,23 +15,23 @@ public class Leave extends HBGCommand{
 		if(sender instanceof Player)
 		{
 			Player p=(Player)sender;
-			if(GamesManager.isInGame(p))
+			if(GamesManager.getGame(p,true)!=null)
 			{
 				Game g=GamesManager.getGame(p,true);
 				if(g.getStatus()==Status.LOBBY)
 				{
-					g.removeTribute(p);
+					g.getPlayerHandler().removeTribute(p);
 				}
 				else
 				{
-					g.eliminateTribute(p);
+					g.getPlayerHandler().eliminate(p);
 				}
 				p.sendMessage(prefix+YELLOW+"You have left the game in arena "+BLUE+g.getArena().getName()+"!");
 			}
-			else if(GamesManager.isSpecing(p))
+			else if(GamesManager.getGame(p,false)!=null)
 			{
 				Game g=GamesManager.getGame(p,false);
-				g.setSpec(p,false);
+				g.getPlayerHandler().removeSpectator(p);
 			}
 			else
 			{

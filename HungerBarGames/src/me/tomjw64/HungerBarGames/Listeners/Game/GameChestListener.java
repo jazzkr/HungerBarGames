@@ -19,14 +19,14 @@ public class GameChestListener extends GameListener{
 	public void chestOpen(PlayerInteractEvent interact)
 	{
 		if(getGame().isTribute(interact.getPlayer())
-				&&getGame().getArena().getFiller()!=null
+				&&getGame().getArena().getChestInfo().getAutoFiller()!=null
 				&&interact.getAction()==Action.RIGHT_CLICK_BLOCK
 				&&interact.getClickedBlock().getState() instanceof Chest)
 		{
 			Chest c=(Chest)interact.getClickedBlock().getState();
 			if(!getGame().beenFilled(c))
 			{
-				getGame().getArena().getFiller().fillChest(c);
+				getGame().getArena().getChestInfo().getAutoFiller().fillChest(c);
 				getGame().setFilled(c);
 			}
 		}

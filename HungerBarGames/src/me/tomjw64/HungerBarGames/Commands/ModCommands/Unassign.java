@@ -24,7 +24,7 @@ public class Unassign extends HBGCommand{
 				if(target instanceof Chest)
 				{
 					Chest c=(Chest)target;
-					a.unassign(c);
+					a.getChestInfo().unassign(c);
 					p.sendMessage(prefix+GREEN+"Chest unassigned!");
 				}
 				else

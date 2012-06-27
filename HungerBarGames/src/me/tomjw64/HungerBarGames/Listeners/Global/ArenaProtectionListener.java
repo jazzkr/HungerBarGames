@@ -23,11 +23,11 @@ public class ArenaProtectionListener implements Listener{
 	public void blockBreak(BlockBreakEvent broken)
 	{
 		Player breaker=broken.getPlayer();
-		if(!GamesManager.isInGame(breaker)&&!breaker.isOp()&&!breaker.hasPermission("HBG.mod.edit"))
+		if(GamesManager.getGame(breaker,true)==null&&!breaker.isOp()&&!breaker.hasPermission("HBG.mod.edit"))
 		{
 			for(Arena a:GamesManager.getArenas())
 			{
-				if(a.isCuboidSet()&&a.isInArena(broken.getBlock()))
+				if(a.isBounded()&&a.getBoundary().isIn(broken.getBlock()))
 				{
 					broken.setCancelled(true);
 					return;
@@ -40,17 +40,14 @@ public class ArenaProtectionListener implements Listener{
 	public void blockPlace(BlockPlaceEvent placed)
 	{
 		Player placer=placed.getPlayer();
-		if(!GamesManager.isInGame(placer))
+		if(GamesManager.getGame(placer,true)==null&&!placer.isOp()&&!placer.hasPermission("HBG.mod.edit"))
 		{
-			if(!GamesManager.isInGame(placer)&&!placer.isOp()&&!placer.hasPermission("HBG.mod.edit"))
+			for(Arena a:GamesManager.getArenas())
 			{
-				for(Arena a:GamesManager.getArenas())
+				if(a.isBounded()&&a.getBoundary().isIn(placed.getBlock()))
 				{
-					if(a.isCuboidSet()&&a.isInArena(placed.getBlock()))
-					{
-						placed.setCancelled(true);
-						return;
-					}
+					placed.setCancelled(true);
+					return;
 				}
 			}
 		}

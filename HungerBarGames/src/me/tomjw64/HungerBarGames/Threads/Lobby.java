@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Managers.ConfigManager;
 import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
-import me.tomjw64.HungerBarGames.Util.Status;
+import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 public class Lobby extends ChatVariableHolder implements Runnable{
 	private Game game;
@@ -41,7 +41,7 @@ public class Lobby extends ChatVariableHolder implements Runnable{
 			}
 			time--;
 		}
-		if(game.getPop()>=game.getArena().getMin())
+		if(game.getPop()>=game.getArena().getInfo().getMin())
 		{
 			game.startCountdown();
 		}
@@ -50,7 +50,7 @@ public class Lobby extends ChatVariableHolder implements Runnable{
 			for(Player p:game.getTributes())
 			{
 				p.sendMessage(prefix+RED+"There are not enough players in the game!");
-				p.sendMessage(prefix+RED+"Have "+game.getPop()+"/"+game.getArena().getMin()+" players needed to start!");
+				p.sendMessage(prefix+RED+"Have "+game.getPop()+"/"+game.getArena().getInfo().getMin()+" players needed to start!");
 				p.sendMessage(prefix+RED+"The game will start when enough players have joined!");
 			}
 			waiting=true;

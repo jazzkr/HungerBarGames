@@ -19,7 +19,7 @@ import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Managers.ConfigManager;
 import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.Util.Players;
-import me.tomjw64.HungerBarGames.Util.Status;
+import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 public class Countdown extends ChatVariableHolder implements Runnable{
 	private Game game;
@@ -64,7 +64,7 @@ public class Countdown extends ChatVariableHolder implements Runnable{
 	
 	public void prepareTributes()
 	{
-		Collection<Location> spawns=game.getArena().getSpawns().values();
+		Collection<Location> spawns=game.getArena().getWarps().getSpawns().values();
 		Set<Player> tributes=game.getTributes();
 		Iterator<Location> i=spawns.iterator();
 		String list=prefix+GREEN+"Tributes: ";
@@ -86,6 +86,7 @@ public class Countdown extends ChatVariableHolder implements Runnable{
 	public void prepareWorld()
 	{
 		game.getArena().getWorld().setTime(0);
+		game.getArena().fillChests();
 		for(Entity e:game.getArena().getWorld().getEntities())
 		{
 			if(e instanceof Monster||e instanceof Slime)

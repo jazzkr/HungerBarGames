@@ -37,14 +37,12 @@ public class CommandHandler {
 		cmds.add(new Delete());
 		cmds.add(new Reload(pl));
 		cmds.add(new Select());
-		cmds.add(new SetCuboid());
 		cmds.add(new SetLobby());
 		cmds.add(new SetMin());
 		cmds.add(new SetMax());
 		cmds.add(new SetSpawn());
 		cmds.add(new SetSpec());
 		cmds.add(new Start());
-		cmds.add(new StartRpt());
 		cmds.add(new Stop());
 	}
 	public static void handleCommand(HungerBarGames pl,CommandSender sender, String[] args)

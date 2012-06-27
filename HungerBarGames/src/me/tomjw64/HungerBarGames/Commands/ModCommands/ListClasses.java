@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.ChestClassManager;
-import me.tomjw64.HungerBarGames.Util.ChestClass;
+import me.tomjw64.HungerBarGames.Util.Chests.ChestClass;
 
 public class ListClasses extends HBGCommand{
 

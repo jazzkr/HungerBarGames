@@ -21,7 +21,7 @@ public class LobbyRemovalListener extends GameListener{
 		if(getGame().isTribute(quitter))
 		{
 			quit.setQuitMessage(null);
-			getGame().removeTribute(quitter);
+			getGame().getPlayerHandler().removeTribute(quitter);
 		}
 	}
 

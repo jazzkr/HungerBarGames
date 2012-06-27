@@ -16,10 +16,10 @@ public class Start extends HBGCommand{
 		{
 			if(a.getGame()==null)
 			{
-				if(a.getSpec()!=null&&a.getLobby()!=null&&a.getCuboid1()!=null&a.getCuboid2()!=null)
+				if(a.isSetup()&&a.isBounded())
 				{
 					sender.sendMessage(prefix+GREEN+"Game Started!");
-					a.startGame(false);
+					a.getGame().startLobby(null);
 				}
 				else
 				{

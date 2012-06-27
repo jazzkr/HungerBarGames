@@ -3,7 +3,7 @@ package me.tomjw64.HungerBarGames.Listeners.Game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.tomjw64.HungerBarGames.Game;
@@ -16,18 +16,15 @@ public class EliminationListener extends GameListener{
 	}
 
 	@EventHandler(priority=EventPriority.NORMAL)
-	public void death(PlayerDeathEvent death)
+	public void death(EntityDamageEvent death)
 	{
-		Player dead=death.getEntity();
-		if(getGame().isTribute(dead))
+		if(death.getEntity() instanceof Player)
 		{
-			death.setDeathMessage(null);
-			getGame().eliminateTribute(dead);
-		}
-		else if(getGame().isSpec(dead))
-		{
-			death.getDrops().clear();
-			getGame().setSpec(dead,false);
+			Player dead=(Player)death.getEntity();
+			if(dead.getHealth()>=0&&getGame().isTribute(dead))
+			{
+				getGame().getPlayerHandler().eliminate(dead);
+			}
 		}
 	}
 	
@@ -38,11 +35,11 @@ public class EliminationListener extends GameListener{
 		if(getGame().isTribute(quitter))
 		{
 			quit.setQuitMessage(null);
-			getGame().eliminateTribute(quitter);
+			getGame().getPlayerHandler().eliminate(quitter);
 		}
-		else if(getGame().isSpec(quitter))
+		else if(getGame().isSpectator(quitter))
 		{
-			getGame().setSpec(quitter,false);
+			getGame().getPlayerHandler().removeSpectator(quitter);
 		}
 	}
 	

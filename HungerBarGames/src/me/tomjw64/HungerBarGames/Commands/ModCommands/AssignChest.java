@@ -4,7 +4,7 @@ import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.CommandHandler;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.ChestClassManager;
-import me.tomjw64.HungerBarGames.Util.ChestClass;
+import me.tomjw64.HungerBarGames.Util.Chests.ChestClass;
 
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
@@ -22,20 +22,20 @@ public class AssignChest extends HBGCommand{
 			Arena a=CommandHandler.getSelections().get(p);
 			if(a!=null)
 			{
-				if(a.isCuboidSet())
+				if(a.isBounded())
 				{
 					ChestClass cc=ChestClassManager.getChestClass(args[0]);
 					if(cc!=null)
 					{
 						BlockState target=p.getTargetBlock(null,30).getState();
-						if(a.isInArena(target.getBlock()))
+						if(a.getBoundary().isIn(target.getBlock()))
 						{
 							if(target instanceof Chest)
 							{
 								Chest c=(Chest)target;
-								if(!a.isAssigned(cc,c))
+								if(!a.getChestInfo().isAssigned(cc,c))
 								{
-									a.addChest(cc,(Chest)target);
+									a.getChestInfo().addChest(cc,(Chest)target);
 									p.sendMessage(prefix+GREEN+"Chest assigned!");
 								}
 								else
