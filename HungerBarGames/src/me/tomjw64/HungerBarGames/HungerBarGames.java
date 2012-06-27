@@ -37,9 +37,10 @@ public class HungerBarGames extends JavaPlugin{
 				
 		//Load all YML files
 		ConfigManager.loadConfig(this);
-		ChestClassManager.loadConfig(this);
+		ChestClassManager.loadChestClasses(this);
 		DataManager.loadDatabase(this);
 		PlayerDataManager.loadPlayerData(this);
+		PlaylistManager.loadPlaylists(this);
 		
 		//Load listeners
 		if(ConfigManager.getPvP())

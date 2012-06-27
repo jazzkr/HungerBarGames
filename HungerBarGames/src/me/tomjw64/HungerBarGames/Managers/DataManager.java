@@ -55,7 +55,6 @@ public class DataManager {
 			wtf.printStackTrace();
 		}
 		
-		//Load Arenas
 		for(String s:database.getKeys(false))
 		{
 			GamesManager.addArena(new Arena(getArenaInfo(s),getBoundary(s),getWarps(s),getChestInfo(s)));			

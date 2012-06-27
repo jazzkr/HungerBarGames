@@ -52,13 +52,10 @@ public class ConfigManager {
 	private static List<String> allowCmds=new ArrayList<String>();
 	
 	
-	//Call onEnable for initialization
 	public static void loadConfig(HungerBarGames pl)
 	{
 		PluginDescriptionFile pdf=pl.getDescription();
-		//Naming the file
 		configFile=new File(pl.getDataFolder(),"config.yml");
-		//Create if it doesn't exist
 		if(!configFile.exists())
 		{
 			configFile.getParentFile().mkdirs();
@@ -69,7 +66,6 @@ public class ConfigManager {
 				wtf.printStackTrace();
 			}
 		}
-		//Actually loading the file
 		config=new YamlConfiguration();
 		try {
 			config.load(configFile);
@@ -78,7 +74,6 @@ public class ConfigManager {
 			wtf.printStackTrace();
 		}		
 		
-		//Check for missing config sections and set defaults
 		if(config.options().header()==null)
 		{
 			config.options().header("HungerBarGames Config File.\nGo to http://dev.bukkit.org/server-mods/hungerbargames/pages/configuration-tutorial/ for a tutorial.");
@@ -155,7 +150,6 @@ public class ConfigManager {
 		}
 		saveConfig();
 		
-		//Load configuration options to memory
 		prefix=ChatColor.BLUE+"["+ChatColor.YELLOW+config.getString("Prefix")+ChatColor.BLUE+"] "+ChatColor.WHITE;
 		restrictChat=config.getBoolean("RestrictChat");
 		chatRadius=config.getInt("ChatRadius");
@@ -188,12 +182,7 @@ public class ConfigManager {
 		}
 		allowCmds.add("hbg");
 	}
-	//Get the config
-	public static FileConfiguration getConfig()
-	{
-		return config;
-	}
-	//Save config
+
 	public static void saveConfig()
 	{
 		try {
@@ -202,47 +191,47 @@ public class ConfigManager {
 			wtf.printStackTrace();
 		}
 	}
-	//Get the plugin's prefix
+
 	public static String getPrefix()
 	{
 		return prefix;
 	}
-	//Get if chat is restricted
+
 	public static boolean getChatRestricted()
 	{
 		return restrictChat;
 	}
-	//Get chat radius restriction
+
 	public static int getChatRadius()
 	{
 		return chatRadius;
 	}
-	//Gets onPlayerMove action
+
 	public static boolean getExplode()
 	{
 		return onPlayerMove;
 	}
-	//Gets the countdown time
+
 	public static int getCountdown()
 	{
 		return countdown;
 	}
-	//Gets the delay between rounds
+
 	public static int getDelay()
 	{
 		return delay;
 	}
-	//Gets defualt max players
+
 	public static int getMaxPlayers()
 	{
 		return defaultMax;
 	}
-	//Gets defualt min players
+
 	public static int getMinPlayers()
 	{
 		return defaultMin;
 	}
-	//Gets whether the plugin should handle pvp or not
+	
 	public static boolean getPvP()
 	{
 		return pvp;

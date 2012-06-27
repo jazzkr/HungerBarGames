@@ -19,13 +19,10 @@ public class ChestClassManager {
 	
 	private static Set<ChestClass> chests=new HashSet<ChestClass>();
 	
-	//Call onEnable for initialization
-	public static void loadConfig(HungerBarGames pl)
+	public static void loadChestClasses(HungerBarGames pl)
 	{
 		PluginDescriptionFile pdf=pl.getDescription();
-		//Naming the file
 		configFile=new File(pl.getDataFolder(),"chestclasses.yml");
-		//Create if it doesn't exist
 		if(!configFile.exists())
 		{
 			configFile.getParentFile().mkdirs();
@@ -36,7 +33,6 @@ public class ChestClassManager {
 				wtf.printStackTrace();
 			}
 		}
-		//Actually loading the file
 		config=new YamlConfiguration();
 		try {
 			config.load(configFile);
@@ -96,19 +92,4 @@ public class ChestClassManager {
 		return chests;
 	}
 	
-	//Get the config
-	public static FileConfiguration getConfig()
-	{
-		return config;
-	}
-	
-	//Save config
-	public static void saveConfig()
-	{
-		try {
-			config.save(configFile);
-		} catch (IOException wtf) {
-			wtf.printStackTrace();
-		}
-	}
 }
