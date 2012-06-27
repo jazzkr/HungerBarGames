@@ -3,6 +3,7 @@ package me.tomjw64.HungerBarGames.Commands.ModCommands;
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
+import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 import org.bukkit.command.CommandSender;
 
@@ -14,7 +15,7 @@ public class Start extends HBGCommand{
 		Arena a=GamesManager.getArena(args[0]);
 		if(a!=null)
 		{
-			if(a.getGame()==null)
+			if(a.getGame().getStatus()==Status.IDLE)
 			{
 				if(a.isSetup()&&a.isBounded())
 				{

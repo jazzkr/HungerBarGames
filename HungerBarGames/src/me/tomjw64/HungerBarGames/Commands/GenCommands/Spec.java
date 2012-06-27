@@ -23,7 +23,7 @@ public class Spec extends HBGCommand{
 					Arena a=GamesManager.getArena(args[0]);
 					if(a!=null)
 					{
-						if(a.getGame()!=null&&a.getGame().getStatus()==Status.IN_GAME)
+						if(a.getGame().getStatus()==Status.IN_GAME)
 						{
 							a.getGame().getPlayerHandler().addSpectator(p);
 						}

@@ -14,11 +14,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class CommandHandler {
-	//Colors
 	private static final ChatColor RED=ChatColor.RED;
-	//Commands
 	private static List<HBGCommand> cmds=new ArrayList<HBGCommand>();
-	//Player, selection associations
 	private static Map<CommandSender,Arena> selections=new HashMap<CommandSender,Arena>();
 	
 	public static void loadCommands()
@@ -26,6 +23,7 @@ public class CommandHandler {
 		cmds.add(new Help());
 		cmds.add(new ListArenas());
 		cmds.add(new ListClasses());
+		cmds.add(new ListPlaylists());
 		cmds.add(new Join());
 		cmds.add(new Leave());
 		cmds.add(new Tributes());

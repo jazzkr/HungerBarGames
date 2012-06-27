@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
+import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 public class Stop extends HBGCommand{
 
@@ -14,7 +15,7 @@ public class Stop extends HBGCommand{
 		Arena a=GamesManager.getArena(args[0]);
 		if(a!=null)
 		{
-			if(a.getGame()!=null)
+			if(a.getGame().getStatus()!=Status.IDLE)
 			{
 				sender.sendMessage(prefix+GREEN+"Game Cancelled!");
 				a.getGame().stopGame(true);

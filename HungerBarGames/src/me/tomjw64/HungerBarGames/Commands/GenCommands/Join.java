@@ -3,6 +3,7 @@ package me.tomjw64.HungerBarGames.Commands.GenCommands;
 import me.tomjw64.HungerBarGames.Arena;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 import me.tomjw64.HungerBarGames.Managers.GamesManager;
+import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,7 +23,7 @@ public class Join extends HBGCommand{
 					Arena a=GamesManager.getArena(args[0]);
 					if(a!=null)
 					{
-						if(a.getGame()!=null)
+						if(a.getGame().getStatus()!=Status.IDLE)
 						{
 							a.getGame().getPlayerHandler().addTribute(p);
 						}

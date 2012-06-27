@@ -28,7 +28,7 @@ public class ListArenas extends HBGCommand{
 			{
 				ChatColor color;
 				Game g=a.getGame();
-				if(g==null)
+				if(g.getStatus()==Status.IDLE)
 				{
 					color=RED;
 				}
@@ -45,7 +45,7 @@ public class ListArenas extends HBGCommand{
 			list=list.substring(0,list.length()-2);
 			sender.sendMessage(list);
 			sender.sendMessage(prefix+YELLOW+"Key: "
-					+RED+"No Game Running"+WHITE+"; "
+					+RED+"Idle"+WHITE+"; "
 					+GREEN+"Game In Session"+WHITE+"; "
 					+BLUE+"In Lobby");
 		}

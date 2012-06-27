@@ -7,13 +7,15 @@ import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 public class Playlist {
+	private String name;
 	private List<Arena> arenas;
+	boolean active=false;
 	private int index=-1;
 	private int loops=0;
 	
-	public Playlist(List<Arena> arenas)
+	public Playlist(String name)
 	{
-		this.arenas=arenas;
+		this.name=name;
 	}
 	
 	public void playNext()
@@ -29,8 +31,9 @@ public class Playlist {
 			Game game=arenas.get(index).getGame();
 			if(game.getStatus()==Status.IDLE&&game.getArena().isBounded()&&game.getArena().isSetup())
 			{
-				game.startLobby(this);
+				active=true;
 				loops=0;
+				game.startLobby(this);
 			}
 			else
 			{
@@ -49,6 +52,23 @@ public class Playlist {
 	public void quit()
 	{
 		index=1;
+		loops=0;
+		active=false;
+	}
+	
+	public void addArena(Arena a)
+	{
+		arenas.add(a);
+	}
+	
+	public boolean isActive()
+	{
+		return active;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 
 }
