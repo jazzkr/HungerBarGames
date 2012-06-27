@@ -66,10 +66,13 @@ public class Game extends ChatVariableHolder{
 	{
 		if(forced)
 		{
+			if(status!=Status.IDLE)
+			{
+				Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+YELLOW+" has been cancelled!");
+			}
 			setStatus(Status.IDLE);
 			rollback();
 			playerHandler.removeAll();
-			Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+YELLOW+" has been cancelled!");
 			if(playlist!=null)
 			{
 				playlist.quit();

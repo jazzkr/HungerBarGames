@@ -20,7 +20,7 @@ public class Tributes extends HBGCommand{
 			{
 				if(sender instanceof Player&&GamesManager.getGame((Player)sender,true)!=null)
 				{
-					sender.sendMessage(prefix+YELLOW+"There are "+a.getGame().getPop()+" tributes still alive!");
+					sender.sendMessage(prefix+YELLOW+"There are "+BLUE+a.getGame().getPop()+YELLOW+" tributes still alive!");
 				}
 				else
 				{

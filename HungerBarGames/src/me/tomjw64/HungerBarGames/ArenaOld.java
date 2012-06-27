@@ -1,4 +1,4 @@
-//package me.tomjw64.HungerBarGames;
+package me.tomjw64.HungerBarGames;
 //
 //import java.util.HashMap;
 //import java.util.HashSet;
@@ -19,7 +19,7 @@
 //import org.bukkit.block.Block;
 //import org.bukkit.block.Chest;
 //
-//public class ArenaOld {
+public class ArenaOld {}
 //	//Name of arena
 //	private String name;
 //	//Whether or not to load the arena to database

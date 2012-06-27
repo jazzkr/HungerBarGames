@@ -1,4 +1,4 @@
-//package me.tomjw64.HungerBarGames;
+package me.tomjw64.HungerBarGames;
 //
 //import java.util.Collection;
 //import java.util.HashSet;
@@ -12,7 +12,7 @@
 //import me.tomjw64.HungerBarGames.Managers.ConfigManager;
 //import me.tomjw64.HungerBarGames.Managers.GamesManager;
 //import me.tomjw64.HungerBarGames.Threads.*;
-//import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
+import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
 //import me.tomjw64.HungerBarGames.Util.Players;
 //import me.tomjw64.HungerBarGames.Util.Enums.Status;
 //
@@ -22,7 +22,7 @@
 //import org.bukkit.block.Chest;
 //import org.bukkit.entity.Player;
 //
-//public class GameOld extends ChatVariableHolder{
+public class GameOld extends ChatVariableHolder{}
 //	private Arena arena;
 //	private Set<Player> tributes=new HashSet<Player>();
 //	private Set<Player> spectators=new HashSet<Player>();

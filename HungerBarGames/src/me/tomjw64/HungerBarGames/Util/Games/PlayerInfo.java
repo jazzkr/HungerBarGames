@@ -22,8 +22,9 @@ public class PlayerInfo {
 		hunger=p.getFoodLevel();
 		loc=p.getLocation();
 		PlayerInventory i=p.getInventory();
-		inv[1]=i.getContents();
-		inv[2]=i.getArmorContents();
+		inv=new ItemStack[2][1];
+		inv[0]=i.getContents();
+		inv[1]=i.getArmorContents();
 	}
 	
 	public void restore()
@@ -33,8 +34,8 @@ public class PlayerInfo {
 		p.setFoodLevel(hunger);
 		p.teleport(loc);
 		PlayerInventory i=p.getInventory();
-		i.setContents(inv[1]);
-		i.setArmorContents(inv[2]);
+		i.setContents(inv[0]);
+		i.setArmorContents(inv[1]);
 	}
 
 }

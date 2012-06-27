@@ -17,14 +17,21 @@ public class Start extends HBGCommand{
 		{
 			if(a.getGame().getStatus()==Status.IDLE)
 			{
-				if(a.isSetup()&&a.isBounded())
+				if(a.isBounded())
 				{
-					sender.sendMessage(prefix+GREEN+"Game Started!");
-					a.getGame().startLobby(null);
+					if(a.isSetup())
+					{
+						sender.sendMessage(prefix+GREEN+"Game Started!");
+						a.getGame().startLobby(null);
+					}
+					else
+					{
+						sender.sendMessage(prefix+RED+"Arena has not been set up correctly!");
+					}
 				}
 				else
 				{
-					sender.sendMessage(prefix+RED+"Arena has not been set up correctly!");
+					sender.sendMessage(prefix+RED+"You need to set up your arena boundary first!");
 				}
 			}
 			else

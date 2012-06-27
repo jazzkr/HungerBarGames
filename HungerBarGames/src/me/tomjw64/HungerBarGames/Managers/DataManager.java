@@ -67,29 +67,32 @@ public class DataManager {
 		ChestClass autofill=ChestClassManager.getChestClass(database.getString(path+"Autofiller"));
 		Map<ChestClass,Set<Chest>> chests=new HashMap<ChestClass,Set<Chest>>();
 		ConfigurationSection assignments=database.getConfigurationSection(path+"Assignments");
-		for(String chestclass:assignments.getKeys(false))
+		if(assignments!=null)
 		{
-			ChestClass cc=ChestClassManager.getChestClass(chestclass);
-			if(cc!=null)
+			for(String chestclass:assignments.getKeys(false))
 			{
-				Set<Chest> chestSet=new HashSet<Chest>();
-				for(String loc:database.getStringList(s+".Chests.Assignments."+chestclass))
+				ChestClass cc=ChestClassManager.getChestClass(chestclass);
+				if(cc!=null)
 				{
-					String[] info=loc.split(",");
-					World world=Bukkit.getWorld(info[0]);
-					if(world!=null)
+					Set<Chest> chestSet=new HashSet<Chest>();
+					for(String loc:database.getStringList(s+".Chests.Assignments."+chestclass))
 					{
-						int x=Integer.parseInt(info[1]);
-						int y=Integer.parseInt(info[2]);
-						int z=Integer.parseInt(info[3]);
-						BlockState bs=world.getBlockAt(x,y,z).getState();
-						if(bs instanceof Chest)
+						String[] info=loc.split(",");
+						World world=Bukkit.getWorld(info[0]);
+						if(world!=null)
 						{
-							chestSet.add((Chest)bs);
+							int x=Integer.parseInt(info[1]);
+							int y=Integer.parseInt(info[2]);
+							int z=Integer.parseInt(info[3]);
+							BlockState bs=world.getBlockAt(x,y,z).getState();
+							if(bs instanceof Chest)
+							{
+								chestSet.add((Chest)bs);
+							}
 						}
 					}
+					chests.put(cc,chestSet);
 				}
-				chests.put(cc,chestSet);
 			}
 		}
 		return new ChestInfo(chests,autofill);
@@ -100,33 +103,10 @@ public class DataManager {
 		Location lobby=null;
 		Location spec=null;
 		Map<Integer,Location> spawns=new HashMap<Integer,Location>();
-		String path=s+".Warps.Lobby";
-		World world=Bukkit.getWorld(database.getString(path+".World"));
-		if(world!=null)
+		String path=s+".Warps.Lobby.";
+		World world;
+		if(database.getString(path+"World")!=null)
 		{
-			double x=database.getDouble(path+".X");
-			double y=database.getDouble(path+".Y");
-			double z=database.getDouble(path+".Z");
-			float yaw=Float.parseFloat(database.getString(path+".Yaw"));
-			float pitch=Float.parseFloat(database.getString(path+".Pitch"));
-			lobby=new Location(world,x,y,z,yaw,pitch);
-		}
-		path=s+".Warps.Spec";
-		world=Bukkit.getWorld(database.getString(path+".World"));
-		if(world!=null)
-		{
-			double x=database.getDouble(path+".X");
-			double y=database.getDouble(path+".Y");
-			double z=database.getDouble(path+".Z");
-			float yaw=Float.parseFloat(database.getString(path+".Yaw"));
-			float pitch=Float.parseFloat(database.getString(path+".Pitch"));
-			spec=new Location(world,x,y,z,yaw,pitch);
-		}
-		ConfigurationSection spawnData=database.getConfigurationSection(s+".Warps.Spawns");
-		for(String spwn:spawnData.getKeys(false))
-		{
-			path=s+".Warps.Spawns."+spwn;
-			Integer position=Integer.valueOf(spwn);
 			world=Bukkit.getWorld(database.getString(path+".World"));
 			if(world!=null)
 			{
@@ -135,7 +115,43 @@ public class DataManager {
 				double z=database.getDouble(path+".Z");
 				float yaw=Float.parseFloat(database.getString(path+".Yaw"));
 				float pitch=Float.parseFloat(database.getString(path+".Pitch"));
-				spawns.put(position,new Location(world,x,y,z,yaw,pitch));
+				lobby=new Location(world,x,y,z,yaw,pitch);
+			}
+		}
+		path=s+".Warps.Spec.";
+		if(database.getString(path+"World")!=null)
+		{
+			world=Bukkit.getWorld(database.getString(path+".World"));
+			if(world!=null)
+			{
+				double x=database.getDouble(path+".X");
+				double y=database.getDouble(path+".Y");
+				double z=database.getDouble(path+".Z");
+				float yaw=Float.parseFloat(database.getString(path+".Yaw"));
+				float pitch=Float.parseFloat(database.getString(path+".Pitch"));
+				spec=new Location(world,x,y,z,yaw,pitch);
+			}
+		}
+		ConfigurationSection spawnData=database.getConfigurationSection(s+".Warps.Spawns");
+		if(spawnData!=null)
+		{
+			for(String spwn:spawnData.getKeys(false))
+			{
+				path=s+".Warps.Spawns."+spwn+".";
+				Integer position=Integer.valueOf(spwn);
+				if(database.getString(path+"World")!=null)
+				{
+					world=Bukkit.getWorld(database.getString(path+".World"));
+					if(world!=null)
+					{
+						double x=database.getDouble(path+".X");
+						double y=database.getDouble(path+".Y");
+						double z=database.getDouble(path+".Z");
+						float yaw=Float.parseFloat(database.getString(path+".Yaw"));
+						float pitch=Float.parseFloat(database.getString(path+".Pitch"));
+						spawns.put(position,new Location(world,x,y,z,yaw,pitch));
+					}
+				}
 			}
 		}
 		return new ArenaWarps(spawns,lobby,spec);
@@ -144,16 +160,19 @@ public class DataManager {
 	private static Boundary getBoundary(String s)
 	{
 		String path=s+".Boundary.";
-		World world=Bukkit.getWorld(database.getString(path+"World"));
-		if(world!=null)
+		if(database.getString(path+"World")!=null)
 		{
-			BoundaryType type=(database.getInt(path+"Type")==0) ? BoundaryType.SQUARE : BoundaryType.CIRCLE;
-			int x=database.getInt(path+"Center.X");
-			int y=database.getInt(path+"Center.Y");
-			int z=database.getInt(path+"Center.Z");
-			Block center=world.getBlockAt(x,y,z);
-			int radius=database.getInt(path+"Radius");
-			return new Boundary(world,type,center,radius);
+			World world=Bukkit.getWorld(database.getString(path+"World"));
+			if(world!=null)
+			{
+				BoundaryType type=(database.getInt(path+"Type")==0) ? BoundaryType.SQUARE : BoundaryType.CIRCLE;
+				int x=database.getInt(path+"Center.X");
+				int y=database.getInt(path+"Center.Y");
+				int z=database.getInt(path+"Center.Z");
+				Block center=world.getBlockAt(x,y,z);
+				int radius=database.getInt(path+"Radius");
+				return new Boundary(world,type,center,radius);
+			}
 		}
 		return null;
 	}

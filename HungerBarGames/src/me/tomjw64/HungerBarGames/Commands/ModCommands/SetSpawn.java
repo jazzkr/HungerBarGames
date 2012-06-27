@@ -41,7 +41,7 @@ public class SetSpawn extends HBGCommand{
 				}
 				else
 				{
-					p.sendMessage(prefix+RED+"You need to set up your arena cuboid first!");
+					p.sendMessage(prefix+RED+"You need to set up your arena boundary first!");
 				}
 			}
 			else

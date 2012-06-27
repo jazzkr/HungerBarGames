@@ -32,7 +32,7 @@ public class CountdownRemovalListener extends GameListener{
 		if(death.getEntity() instanceof Player)
 		{
 			Player dead=(Player)death.getEntity();
-			if(dead.getHealth()>=0&&getGame().isTribute(dead))
+			if(dead.getHealth()<=death.getDamage()&&getGame().isTribute(dead))
 			{
 				getGame().getPlayerHandler().eliminate(dead);
 			}

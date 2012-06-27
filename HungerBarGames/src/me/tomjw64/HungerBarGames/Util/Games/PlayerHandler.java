@@ -38,13 +38,13 @@ public class PlayerHandler extends ChatVariableHolder{
 			{
 				if(game.getPop()<game.getArena().getWarps().getNumSpawns())
 				{
-					p.sendMessage(prefix+YELLOW+"You have joined the game in arena "+BLUE+game.getArena().getName()+"!");
-					p.sendMessage(prefix+YELLOW+"This game has "+BLUE+game.getPop()+"/"+game.getArena().getInfo().getMax()+YELLOW+" players!");
 					if(info==null)
 					{
 						info=new PlayerInfo(p);
 					}
 					tributes.put(p,info);
+					p.sendMessage(prefix+YELLOW+"You have joined the game in arena "+BLUE+game.getArena().getName()+"!");
+					p.sendMessage(prefix+YELLOW+"This game has "+BLUE+game.getPop()+"/"+game.getArena().getInfo().getMax()+YELLOW+" players!");
 					Players.clearInv(p);
 					Players.heal(p);
 					p.teleport(game.getArena().getWarps().getLobby());
@@ -154,15 +154,15 @@ public class PlayerHandler extends ChatVariableHolder{
 	
 	public void removeAll()
 	{
-		final Set<Player> specs=spectators.keySet();
-		for(Player p:specs)
+		final Object[] specs=spectators.keySet().toArray();
+		for(Object p:specs)
 		{
-			removeSpectator(p);
+			removeSpectator((Player)p);
 		}
-		final Set<Player> tribs=tributes.keySet();
-		for(Player p:tribs)
+		final Object[] tribs=tributes.keySet().toArray();
+		for(Object p:tribs)
 		{
-			removeTribute(p,true);
+			removeTribute((Player)p,true);
 		}
 	}
 	

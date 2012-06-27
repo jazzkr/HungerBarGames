@@ -33,6 +33,7 @@ public class SetBoundary extends HBGCommand{
 						{
 							a.setBoundary(new Boundary(p.getWorld(),BoundaryType.CIRCLE,p.getLocation().getBlock(),radius));
 						}
+						p.sendMessage(prefix+YELLOW+"Boundary set for arena "+BLUE+a.getName()+YELLOW+"!");
 					}
 					catch(Exception wtf)
 					{

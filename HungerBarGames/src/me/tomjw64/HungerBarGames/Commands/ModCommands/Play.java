@@ -32,22 +32,22 @@ public class Play extends HBGCommand{
 
 	@Override
 	public String cmd() {
-		return null;
+		return "play";
 	}
 
 	@Override
 	public String usage() {
-		return null;
+		return cmd()+" [playlist]";
 	}
 
 	@Override
 	public String description() {
-		return null;
+		return "starts a playlist";
 	}
 
 	@Override
 	public String permission() {
-		return null;
+		return "HBG.mod.start";
 	}
 
 	@Override
