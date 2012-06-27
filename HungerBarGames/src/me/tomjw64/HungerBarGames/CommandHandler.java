@@ -21,7 +21,7 @@ public class CommandHandler {
 	//Player, selection associations
 	private static Map<CommandSender,Arena> selections=new HashMap<CommandSender,Arena>();
 	
-	public static void loadCommands(HungerBarGames pl)
+	public static void loadCommands()
 	{
 		cmds.add(new Help());
 		cmds.add(new ListArenas());
@@ -35,14 +35,16 @@ public class CommandHandler {
 		cmds.add(new AutoAssign());
 		cmds.add(new Create());
 		cmds.add(new Delete());
-		cmds.add(new Reload(pl));
+		cmds.add(new Reload());
 		cmds.add(new Select());
+		cmds.add(new SetBoundary());
 		cmds.add(new SetLobby());
 		cmds.add(new SetMin());
 		cmds.add(new SetMax());
 		cmds.add(new SetSpawn());
 		cmds.add(new SetSpec());
 		cmds.add(new Start());
+		cmds.add(new Play());
 		cmds.add(new Stop());
 	}
 	public static void handleCommand(HungerBarGames pl,CommandSender sender, String[] args)

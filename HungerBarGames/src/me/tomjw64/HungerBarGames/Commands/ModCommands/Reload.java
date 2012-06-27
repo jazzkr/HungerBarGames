@@ -1,17 +1,10 @@
 package me.tomjw64.HungerBarGames.Commands.ModCommands;
 
-import me.tomjw64.HungerBarGames.HungerBarGames;
 import me.tomjw64.HungerBarGames.Commands.HBGCommand;
 
 import org.bukkit.command.CommandSender;
 
 public class Reload extends HBGCommand{
-	public static HungerBarGames pl;
-	
-	public Reload(HungerBarGames instance)
-	{
-		pl=instance;
-	}
 	
 	@Override
 	public void execute(CommandSender sender, String[] args) {

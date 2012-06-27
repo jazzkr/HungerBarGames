@@ -10,9 +10,9 @@ import org.bukkit.event.Listener;
 public abstract class GameListener implements Listener{
 	private Game game;
 	
-	public GameListener(Game gm)
+	public GameListener(Game game)
 	{
-		game=gm;
+		this.game=game;
 		game.addListener(this);
 		Bukkit.getServer().getPluginManager().registerEvents(this,HungerBarGames.plugin);
 	}

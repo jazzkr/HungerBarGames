@@ -49,7 +49,7 @@ public class HungerBarGames extends JavaPlugin{
 		new ArenaProtectionListener();
 		
 		//Load commands
-		CommandHandler.loadCommands(this);
+		CommandHandler.loadCommands();
 		
 		
 		

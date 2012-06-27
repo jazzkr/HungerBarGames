@@ -45,6 +45,11 @@ public class Arena {
 		}
 	}
 	
+	public void setBoundary(Boundary bound)
+	{
+		boundary=bound;
+	}
+	
 	public boolean isBounded()
 	{
 		return boundary!=null;
