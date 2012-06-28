@@ -24,7 +24,7 @@ public class Leave extends HBGCommand{
 				}
 				else
 				{
-					g.getPlayerHandler().eliminate(p);
+					g.getPlayerHandler().eliminate(p,true);
 				}
 				p.sendMessage(prefix+YELLOW+"You have left the game in arena "+BLUE+g.getArena().getName()+"!");
 			}

@@ -71,6 +71,11 @@ public class PlayerHandler extends ChatVariableHolder{
 	}
 	
 	public void eliminate(Player p)
+	{
+		eliminate(p,false);
+	}
+	
+	public void eliminate(Player p,boolean restore)
 	{	
 		Location deathLoc=p.getLocation();
 		p.getWorld().strikeLightning(deathLoc.add(0, 100, 0));
@@ -83,7 +88,7 @@ public class PlayerHandler extends ChatVariableHolder{
 			deathLoc.getWorld().dropItemNaturally(deathLoc,i);
 		}
 		deaths.add(p.getName());
-		removeTribute(p,false);
+		removeTribute(p,restore);
 		if(getPop()==1)
 		{
 			declareWinner();
