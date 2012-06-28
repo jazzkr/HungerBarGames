@@ -32,7 +32,7 @@ public class Boundary {
 		{
 			int asquared=(int)Math.pow(Math.abs(x-bx),2);
 			int bsquared=(int)Math.pow(Math.abs(z-bz),2);
-			return Math.sqrt(asquared+bsquared)<=50;
+			return Math.sqrt(asquared+bsquared)<=radius;
 		}
 		else
 		{

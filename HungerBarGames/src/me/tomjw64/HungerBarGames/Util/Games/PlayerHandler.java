@@ -142,6 +142,7 @@ public class PlayerHandler extends ChatVariableHolder{
 	
 	public void declareWinner()
 	{
+		//TODO: End game first because winner doesn't receive rewards.
 		Player p=(Player)tributes.keySet().toArray()[0];
 		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Player "+BLUE+p.getName()+YELLOW+" has won the game in arena "+BLUE+game.getArena().getName()+"!");
 		for(String cmd:ConfigManager.getWinCommands())

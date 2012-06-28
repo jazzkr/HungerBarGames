@@ -9,6 +9,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class PlayerInfo {
 	private Player p;
 	private GameMode gamemode;
+	private boolean flight;
 	private int health;
 	private int hunger;
 	private Location loc;
@@ -18,6 +19,7 @@ public class PlayerInfo {
 	{
 		this.p=p;
 		gamemode=p.getGameMode();
+		flight=p.getAllowFlight();
 		health=p.getHealth();
 		hunger=p.getFoodLevel();
 		loc=p.getLocation();
@@ -30,6 +32,7 @@ public class PlayerInfo {
 	public void restore()
 	{
 		p.setGameMode(gamemode);
+		p.setAllowFlight(flight);
 		p.setHealth(health);
 		p.setFoodLevel(hunger);
 		p.teleport(loc);

@@ -28,9 +28,10 @@ public class GameMotionListener extends GameListener{
 			if(!g.getArena().getBoundary().isIn(move.getTo()))
 			{
 				Location from=move.getFrom();
-				double x=Math.floor(from.getX()+.5);
-				double z=Math.floor(from.getZ()+.5);
-				mover.teleport(new Location(from.getWorld(),x,from.getY(),z,from.getYaw(),from.getPitch()));
+				Location to=move.getTo();
+				double x=Math.floor(from.getX())+.5;
+				double z=Math.floor(from.getZ())+.5;
+				mover.teleport(new Location(from.getWorld(),x,from.getY(),z,to.getYaw(),to.getPitch()));
 				mover.sendMessage(ChatColor.RED+"You cannot go outside the arena!");
 			}
 		}

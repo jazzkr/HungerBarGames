@@ -1,5 +1,6 @@
 package me.tomjw64.HungerBarGames.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.tomjw64.HungerBarGames.Arena;
@@ -16,6 +17,7 @@ public class Playlist {
 	public Playlist(String name)
 	{
 		this.name=name;
+		arenas=new ArrayList<Arena>();
 	}
 	
 	public void playNext()

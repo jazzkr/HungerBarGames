@@ -36,7 +36,7 @@ public class CountdownMotionListener extends GameListener{
 				{
 					x+=.5;
 					z+=.5;
-					move.getPlayer().teleport(new Location(from.getWorld(),x,from.getY(),z,from.getYaw(),from.getPitch()));
+					move.getPlayer().teleport(new Location(from.getWorld(),x,from.getY(),z,to.getYaw(),to.getPitch()));
 				}
 			}
 		}
