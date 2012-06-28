@@ -15,7 +15,7 @@ public class EliminationListener extends GameListener{
 		super(gm);
 	}
 
-	@EventHandler(priority=EventPriority.NORMAL)
+	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
 	public void death(EntityDamageEvent death)
 	{
 		if(death.getEntity() instanceof Player)
@@ -23,6 +23,7 @@ public class EliminationListener extends GameListener{
 			Player dead=(Player)death.getEntity();
 			if(dead.getHealth()<=death.getDamage()&&getGame().isTribute(dead))
 			{
+				death.setCancelled(true);
 				getGame().getPlayerHandler().eliminate(dead);
 			}
 		}

@@ -76,17 +76,23 @@ public class PlayerHandler extends ChatVariableHolder{
 	}
 	
 	public void eliminate(Player p,boolean restore)
-	{	
+	{
 		Location deathLoc=p.getLocation();
-		p.getWorld().strikeLightning(deathLoc.add(0, 100, 0));
 		for(ItemStack i:p.getInventory().getContents())
 		{
-			deathLoc.getWorld().dropItemNaturally(deathLoc,i);
+			if(i!=null)
+			{
+				deathLoc.getWorld().dropItemNaturally(deathLoc,i);
+			}
 		}
 		for(ItemStack i:p.getInventory().getArmorContents())
 		{
-			deathLoc.getWorld().dropItemNaturally(deathLoc,i);
+			if(i!=null&&i.getTypeId()!=0)
+			{
+				deathLoc.getWorld().dropItemNaturally(deathLoc,i);
+			}
 		}
+		p.getWorld().strikeLightning(deathLoc.add(0, 100, 0));
 		deaths.add(p.getName());
 		removeTribute(p,restore);
 		if(getPop()==1)
