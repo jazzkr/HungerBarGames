@@ -96,7 +96,7 @@ public class Game extends ChatVariableHolder{
 			b.setData(entry.getValue().getData());
 		}
 		filledChests.clear();
-		HungerBarGames.logger.info(GREEN+"Arena "+arena.getName()+" rolled back!");
+		HungerBarGames.logger.info("Arena "+arena.getName()+" rolled back!");
 	}
 	
 	public void updateListeners()

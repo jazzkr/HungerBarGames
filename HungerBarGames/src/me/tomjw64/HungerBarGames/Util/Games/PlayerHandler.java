@@ -79,6 +79,13 @@ public class PlayerHandler extends ChatVariableHolder{
 		}
 	}
 	
+	public void declareWinner()
+	{
+		Player p=(Player)tributes.keySet().toArray()[0];
+		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Player "+BLUE+p.getName()+YELLOW+" has won the game in arena "+BLUE+game.getArena().getName()+"!");
+		game.endGame(p);
+	}
+	
 	public void removeTribute(Player p)
 	{
 		removeTribute(p,true);
@@ -137,14 +144,6 @@ public class PlayerHandler extends ChatVariableHolder{
 			other.showPlayer(p);
 		}
 		p.sendMessage(prefix+YELLOW+"You have stopped spectating arena "+BLUE+game.getArena().getName()+"!");
-	}
-	
-	public void declareWinner()
-	{
-		//TODO: End game first because winner doesn't receive rewards.
-		Player p=(Player)tributes.keySet().toArray()[0];
-		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Player "+BLUE+p.getName()+YELLOW+" has won the game in arena "+BLUE+game.getArena().getName()+"!");
-		game.endGame(p);
 	}
 	
 	public void removeAll()

@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Managers.ConfigManager;
-import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 public class EndGame implements Runnable{
 	private Game game;
@@ -26,19 +25,14 @@ public class EndGame implements Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		game.setStatus(Status.IDLE);
-		if(game.getPlaylist()==null)
+		game.reset();
+		for(String cmd:ConfigManager.getWinCommands())
 		{
-			game.getPlayerHandler().removeAll();
+			cmd=cmd.replace("<player>", winner.getName());
+			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),cmd);
 		}
-		else
+		if(game.getPlaylist()!=null)
 		{
-			game.reset();
-			for(String cmd:ConfigManager.getWinCommands())
-			{
-				cmd=cmd.replace("<player>", winner.getName());
-				Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),cmd);
-			}
 			game.getPlaylist().playNext();
 		}
 	}
