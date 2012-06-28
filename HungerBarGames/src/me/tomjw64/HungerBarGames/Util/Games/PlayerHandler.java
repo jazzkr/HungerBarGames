@@ -11,7 +11,9 @@ import me.tomjw64.HungerBarGames.Util.Players;
 import me.tomjw64.HungerBarGames.Util.Enums.Status;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerHandler extends ChatVariableHolder{
 	private Game game;
@@ -70,7 +72,16 @@ public class PlayerHandler extends ChatVariableHolder{
 	
 	public void eliminate(Player p)
 	{	
-		p.getWorld().strikeLightning(p.getLocation().add(0, 100, 0));
+		Location deathLoc=p.getLocation();
+		p.getWorld().strikeLightning(deathLoc.add(0, 100, 0));
+		for(ItemStack i:p.getInventory().getContents())
+		{
+			deathLoc.getWorld().dropItemNaturally(deathLoc,i);
+		}
+		for(ItemStack i:p.getInventory().getArmorContents())
+		{
+			deathLoc.getWorld().dropItemNaturally(deathLoc,i);
+		}
 		deaths.add(p.getName());
 		removeTribute(p,false);
 		if(getPop()==1)
