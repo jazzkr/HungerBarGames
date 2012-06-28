@@ -62,26 +62,29 @@ public class Game extends ChatVariableHolder{
 		}
 	}
 	
-	public void stopGame(boolean forced)
+	public void forceStop()
 	{
-		if(forced)
+		if(status!=Status.IDLE)
 		{
-			if(status!=Status.IDLE)
-			{
-				Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+YELLOW+" has been cancelled!");
-			}
-			setStatus(Status.IDLE);
-			rollback();
-			playerHandler.removeAll();
+			Bukkit.getServer().broadcastMessage(prefix+YELLOW+"The game in arena "+BLUE+arena.getName()+YELLOW+" has been cancelled!");
+			reset();
 			if(playlist!=null)
 			{
 				playlist.quit();
 			}
 		}
-		else
-		{
-			new EndGame(this);
-		}
+	}
+	
+	public void endGame(Player winner)
+	{
+		new EndGame(this,winner);
+	}
+	
+	public void reset()
+	{
+		setStatus(Status.IDLE);
+		rollback();
+		playerHandler.removeAll();
 	}
 	
 	public void rollback()
@@ -92,6 +95,7 @@ public class Game extends ChatVariableHolder{
 			b.setTypeId(entry.getValue().getID());
 			b.setData(entry.getValue().getData());
 		}
+		filledChests.clear();
 		HungerBarGames.logger.info(GREEN+"Arena "+arena.getName()+" rolled back!");
 	}
 	

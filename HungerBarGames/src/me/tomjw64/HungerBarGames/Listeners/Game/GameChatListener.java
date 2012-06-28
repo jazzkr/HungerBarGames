@@ -32,6 +32,7 @@ public class GameChatListener extends GameListener{
 						chat.getRecipients().add((Player)e);
 					}
 				}
+				chat.getRecipients().add(chat.getPlayer());
 			}
 		}
 	}

@@ -18,7 +18,7 @@ public class Stop extends HBGCommand{
 			if(a.getGame().getStatus()!=Status.IDLE)
 			{
 				sender.sendMessage(prefix+GREEN+"Game Cancelled!");
-				a.getGame().stopGame(true);
+				a.getGame().forceStop();
 			}
 			else
 			{

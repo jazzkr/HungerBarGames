@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import me.tomjw64.HungerBarGames.Game;
-import me.tomjw64.HungerBarGames.Managers.ConfigManager;
 import me.tomjw64.HungerBarGames.Util.ChatVariableHolder;
 import me.tomjw64.HungerBarGames.Util.Players;
 import me.tomjw64.HungerBarGames.Util.Enums.Status;
@@ -145,12 +144,7 @@ public class PlayerHandler extends ChatVariableHolder{
 		//TODO: End game first because winner doesn't receive rewards.
 		Player p=(Player)tributes.keySet().toArray()[0];
 		Bukkit.getServer().broadcastMessage(prefix+YELLOW+"Player "+BLUE+p.getName()+YELLOW+" has won the game in arena "+BLUE+game.getArena().getName()+"!");
-		for(String cmd:ConfigManager.getWinCommands())
-		{
-			cmd=cmd.replace("<player>", p.getName());
-			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),cmd);
-		}
-		game.stopGame(false);
+		game.endGame(p);
 	}
 	
 	public void removeAll()

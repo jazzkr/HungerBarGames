@@ -85,7 +85,7 @@ public class GamesManager {
 		{
 			if(a.getGame()!=null)
 			{
-				a.getGame().stopGame(true);
+				a.getGame().forceStop();
 			}
 		}
 	}
