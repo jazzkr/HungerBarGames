@@ -1,19 +1,20 @@
 package me.tomjw64.HungerBarGames.Threads;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Slime;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.inventory.ItemStack;
 
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Managers.ConfigManager;
@@ -89,10 +90,18 @@ public class Countdown extends ChatVariableHolder implements Runnable{
 		game.getArena().fillChests();
 		for(Entity e:game.getArena().getWorld().getEntities())
 		{
-			if(e instanceof Monster||e instanceof Slime)
+			if(e instanceof Monster||
+					e instanceof Slime||
+					e instanceof Item||
+					e instanceof Projectile||
+					e instanceof Boat||
+					e instanceof Minecart||
+					e instanceof ExperienceOrb)
 			{
-				Bukkit.getPluginManager().callEvent(new EntityDeathEvent((LivingEntity)e,Collections.<ItemStack> emptyList()));
-				e.remove();
+				if(game.getArena().getBoundary().isIn(e))
+				{
+					e.remove();
+				}
 			}
 		}
 	}
