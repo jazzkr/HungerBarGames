@@ -16,9 +16,9 @@ public class Spec extends HBGCommand{
 		if(sender instanceof Player)
 		{
 			Player p=(Player)sender;
-			if(GamesManager.getGame(p,true)!=null)
+			if(GamesManager.getGame(p,true)==null)
 			{
-				if(GamesManager.getGame(p,false)!=null)
+				if(GamesManager.getGame(p,false)==null)
 				{
 					Arena a=GamesManager.getArena(args[0]);
 					if(a!=null)
