@@ -4,7 +4,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import me.tomjw64.HungerBarGames.Game;
 import me.tomjw64.HungerBarGames.Listeners.GameListener;
@@ -17,7 +17,7 @@ public class GameChatListener extends GameListener{
 	}
 	
 	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
-	public void chat(PlayerChatEvent chat)
+	public void chat(AsyncPlayerChatEvent chat)
 	{
 		if(ConfigManager.getChatRestricted())
 		{
